@@ -4,6 +4,7 @@ class AuthController
 {
     public function login($request)
     {
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(

@@ -22,9 +22,9 @@ if(isset($_POST['action'])) {
     {
         case 'login':
             $session_data = Controller::$authController->login($request);
-    
             if($session_data->code == 2)
             {
+
                 session_start();
                 $_SESSION['token'] = $session_data->data->token;
                 $_SESSION['profile'] = $session_data;
