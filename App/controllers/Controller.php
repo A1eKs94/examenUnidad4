@@ -28,9 +28,11 @@ switch($_POST['action'])
             $_SESSION['token'] = $session_data->data->token;
             $_SESSION['profile'] = $session_data;
 
-            header('Location: ' . BASE_PATH . 'testHome.php');
+            header('Location: ' . BASE_PATH . 'home');
         } else {
-            header('Location: ' . BASE_PATH . 'index.php');
+            header('Location: ' . BASE_PATH . 'auth');
         }
         break;
+    default:
+        echo 'Controlador no encontrado';
 }

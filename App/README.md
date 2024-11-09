@@ -1,7 +1,7 @@
 # Como hacer las peticiones en un form
 
 ```php
-<form action="<?php echo BASE_PATH; ?>ruta/sub-ruta" method="POST">
+<form action="<?php echo BASE_PATH; ?>api" method="POST">
     <input type="text" name="valor-1"><br>
     <input type="text" name="valor-2"><br>
     <input type="hidden" name="action" value="accion">
@@ -10,9 +10,9 @@
 ```
 Los campos deben estar de esta forma
 
-* Ruta: ahi se pondra la ruta de una entidad
+* Ruta: Todas las peticiones se haran en la misma ruta (BASE_PATH/api)
 ```php
-<form action="<?php echo BASE_PATH; ?>ruta/sub-ruta" method="POST">
+<form action="<?php echo BASE_PATH; ?>api" method="POST">
 ```
 
 * Campos: los campos input con su name
@@ -21,7 +21,7 @@ Los campos deben estar de esta forma
 <input type="text" name="valor-2"><br>
 ```
 
-* la etiqueta input con el tipo hidden para dar la accion de la peticion
+* la etiqueta input con el tipo hidden para dar la accion de la peticion, en la seccion de Peticiones vienen todos los metodos que se pueden llamar en este campo
 
 <hr>
 
@@ -39,13 +39,13 @@ $_SESSION['profile']
 
 Devuelve los datos de la cuenta
 
+Nota: Debe tener la funcion session_start();
+
 <hr>
 
 # Peticiones
 
 ## Autenticacion
-
-Ruta: <RUTA_BASE>/api/auth
 
 ### Accion: login
 
@@ -60,8 +60,12 @@ Ruta: <RUTA_BASE>/api/auth
 
 ### Resultado
 
-Luego de la peticion te manda al home, importante usar esta linea en cada vista que se ocupe una sesion
+Luego de la peticion te manda al home.
+
+NOTA: Importante usar esta funcion en cada vista que se ocupe una sesion
 
 ```php
 session_start();
 ```
+
+### Seguire llenando este documento cuando ponga mas metodos.
