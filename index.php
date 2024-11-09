@@ -37,7 +37,7 @@ include "config.php";
                             <input type="password" class="form-control" id="floatingInput1" placeholder="Contraseña" required name="password" />
                         </div>
                         <div class="d-grid mt-4">
-                            <a class="btn btn-primary" href="">Iniciar Sesión</a>
+                            <a class="btn btn-primary" href="<?= BASE_PATH ?>profile/">Iniciar Sesión</a>
                         </div>
                     </div>
                 </div>

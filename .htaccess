@@ -2,3 +2,4 @@ Options +FollowSymLinks -MultiViews -Indexes
 RewriteEngine on
 
 RewriteRule ^auth/?$ index.php 
+RewriteRule ^profile/?$ views/account-profile.php 
