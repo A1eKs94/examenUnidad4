@@ -17,22 +17,26 @@ $controller = new Controller();
 
 $request = (object)$_POST;
 
-switch($_POST['action'])
-{
-    case 'login':
-        $session_data = Controller::$authController->login($request);
-
-        if($session_data->code == 2)
-        {
-            session_start();
-            $_SESSION['token'] = $session_data->data->token;
-            $_SESSION['profile'] = $session_data;
-
-            header('Location: ' . BASE_PATH . 'home');
-        } else {
-            header('Location: ' . BASE_PATH . 'auth');
-        }
-        break;
-    default:
-        echo 'Controlador no encontrado';
+if(isset($_POST['action'])) {
+    switch($_POST['action'])
+    {
+        case 'login':
+            $session_data = Controller::$authController->login($request);
+    
+            if($session_data->code == 2)
+            {
+                session_start();
+                $_SESSION['token'] = $session_data->data->token;
+                $_SESSION['profile'] = $session_data;
+    
+                header('Location: ' . BASE_PATH . 'home');
+            } else {
+                header('Location: ' . BASE_PATH . 'auth');
+            }
+            break;
+        default:
+            echo 'Controlador no encontrado';
+    }
+} else {
+    echo 'Sistema de controladores';
 }
