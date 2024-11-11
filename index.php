@@ -1,6 +1,16 @@
 <?php
 
 include "config.php";
+
+session_start();
+
+if (isset($_SESSION['error_message'])) {
+    $error_message = $_SESSION['error_message'];
+    unset($_SESSION['error_message']);
+} else {
+    $error_message = '';
+}
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -30,15 +40,24 @@ include "config.php";
                     <div class="card-body">
                         <h4 class="f-w-500 mb-1">Iniciar sesión con tu correo</h4>
                         <p class="mb-3">Ingrese los datos solicitados</p>
-                        <div class="mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="Correo electrónico" required name="email" />
-                        </div>
-                        <div class="mb-3">
-                            <input type="password" class="form-control" id="floatingInput1" placeholder="Contraseña" required name="password" />
-                        </div>
-                        <div class="d-grid mt-4">
-                            <a class="btn btn-primary" href="<?= BASE_PATH ?>profile/">Iniciar Sesión</a>
-                        </div>
+                        <?php if (!empty($error_message)): ?>
+                            <div class="alert alert-danger" role="alert">
+                                <?php echo $error_message; ?> datos incorrectos
+                            </div>
+                        <?php endif; ?>
+                        <form action="<?php echo BASE_PATH; ?>api" method="POST">
+                            <input type="hidden" name="action" value="login">
+                            <div class="mb-3">
+                                <input type="email" class="form-control" id="floatingInput" placeholder="Correo electrónico" required name="email" />
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" id="floatingInput1" placeholder="Contraseña" required name="password" />
+                            </div>
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
             </div>
