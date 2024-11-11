@@ -1,6 +1,3 @@
-<?php 
+<?php
 
-	define('BASE_PATH', 'http://examen.test/home');
-	
-
-?>
+define('BASE_PATH', 'http://examen.test/');
