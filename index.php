@@ -1,6 +1,17 @@
 <?php
 
 include "config.php";
+
+session_start(); 
+
+if (isset($_SESSION['error_message'])) {
+    $error_message = $_SESSION['error_message']; 
+    unset($_SESSION['error_message']); 
+  
+} else {
+    $error_message = ''; 
+}
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -30,6 +41,11 @@ include "config.php";
                     <div class="card-body">
                         <h4 class="f-w-500 mb-1">Iniciar sesión con tu correo</h4>
                         <p class="mb-3">Ingrese los datos solicitados</p>
+                        <?php if (!empty($error_message)): ?>
+                            <div class="alert alert-danger" role="alert">
+                                <?php echo $error_message; ?> datos incorrectos  
+                            </div>
+                        <?php endif; ?>
                         <form action="<?php echo BASE_PATH; ?>api" method="POST">
                             <input type="hidden" name="action" value="login">
                             <div class="mb-3">
