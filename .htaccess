@@ -1,7 +1,8 @@
 Options +FollowSymLinks -MultiViews -Indexes
 RewriteEngine on
 
-RewriteRule ^auth/?$ index.php 
-RewriteRule ^profile/?$ views/account-profile.php 
+RewriteRule ^auth/?$ index.php
+RewriteRule ^profile/?$ views/account-profile.php
 RewriteRule ^home/?$ views/home.php
 RewriteRule ^crear-producto/?$ views/create.php
+RewriteRule ^api/?$ App/controllers/Controller.php
