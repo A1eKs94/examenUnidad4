@@ -1,3 +1,6 @@
 <?php
 
-define('BASE_PATH', 'http://examen.test/');
+	define('BASE_PATH', 'http://productos.test/');
+	
+
+?>

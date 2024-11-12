@@ -7,7 +7,7 @@ class UserController
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/users/123',
+            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/users/' . $request->id,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,

@@ -25,6 +25,20 @@ Los campos deben estar de esta forma
 
 <hr>
 
+# Como hacer las peticiones con funciones
+
+```php
+$datos = $controller->funcionBackend((object)["campo_1" => "dato_1", "campo_2" => "dato_2"])
+```
+
+*$datos: variable que almacena los datos de la respuesta en json
+*$controller: funcion principal para los controladores. NOTA: OCUPA IMPORTAR EL ARCHIVO 'Controller.php' QUE ESTA DENTRO DE LA CARPETA 'App'
+*funcionBackend: Funcion para llamar a un metodo del backend, estaran enlistadas en la seccion de "Peticiones"
+
+Dentro del argumento de cada peticion backend necesita un parametro que es el "$request", este es un objeto json y se hace como viene en el ejemplo de arriba.
+
+<hr>
+
 # Como recibe los datos de la sesion una vez logeado con la peticion login
 
 ```php
@@ -47,6 +61,8 @@ Nota: Debe tener la funcion session_start();
 
 ## Autenticacion
 
+### Peticion desde Form
+
 ### Accion: login
 
 ```html
@@ -67,5 +83,24 @@ NOTA: Importante usar esta funcion en cada vista que se ocupe una sesion
 ```php
 session_start();
 ```
+
+## getUser
+
+### Peticion desde una funcion
+
+### funcion Backend: getUser($request)
+
+### Campos
+
+```php
+$request = (object)[
+    "id" => id,
+    "token" => token
+    ];
+```
+
+### Resultado
+
+JSON de los datos del usuario
 
 ### Seguire llenando este documento cuando ponga mas metodos.

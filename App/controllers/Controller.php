@@ -1,24 +1,24 @@
 <?php
 
-require_once "../../config.php";
+require_once dirname(__DIR__, 2) . '/config.php';
 require_once "AuthController.php";
 require_once "UserController.php";
 
 class Controller
 {
-    public static $authController;
-    public static $userController;
+    public $authController;
+    public $userController;
 
     public function __construct()
     {
-        self::$authController = new AuthController();
-        self::$userController = new UserController();
+        $this->authController = new AuthController();
+        $this->userController = new UserController();
     }
 
     // Auth Controllers
     public function login($request)
     {
-        $session_data = Controller::$authController->login($request);
+        $session_data = $this->authController->login($request);
         if ($session_data->code == 2) {
             session_start();
             $_SESSION['token'] = $session_data->data->token;
@@ -33,10 +33,9 @@ class Controller
     }
 
     // User Controllers
-
     public function getUser($request)
     {
-        $user_data = Controller::$userController->getUser($request);
+        $user_data = $this->userController->getUser($request);
         return $user_data;
     }
 }
@@ -45,13 +44,14 @@ $controller = new Controller();
 
 $request = (object)$_POST;
 
+// Form
+
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
         // Auth
         case 'login': $controller->login($request); break;
 
         // User
-        case 'getUser': $controller->getUser($request); break;
 
         default: echo 'Controlador no encontrado';
     }
