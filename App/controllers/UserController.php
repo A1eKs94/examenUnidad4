@@ -4,6 +4,7 @@ class UserController
 {
     public function getUser($request)
     {
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(

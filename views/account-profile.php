@@ -1,5 +1,30 @@
 <?php
 include "../config.php";
+
+session_start();
+
+if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
+    $user_id = $_SESSION['profile']->data->id;  
+    $token = $_SESSION['token'];  
+    require_once "../App/controllers/Controller.php";
+
+
+    /* <?php            
+    echo '<pre>';
+    print_r($_SESSION['profile']);
+    echo '</pre>';
+    ?> */
+    
+    $request = (object)[
+        'id' => $user_id,  
+        'token' => $token   
+    ];
+    $user_data = $controller->getUser($request);
+} else {
+    echo "Error: El perfil del usuario no está disponible o no se encuentra en la sesión.";
+    exit;
+}
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -118,7 +143,7 @@ include "../config.php";
                             <!-- Aqui va el nombre de usuario -->
                             <div class="col-md-6">
                               <p class="mb-1 text-muted">Nombre</p>
-                              <p class="mb-0">Anshan Handgun</p>
+                              <p class="mb-0">  <?php echo  $user_data->data->name; ?></p>
                             </div>
                             <!-- Aqui va el nivel que tiene el usuario 'vip, premiun o normal'-->
                             <div class="col-md-6">
@@ -132,7 +157,7 @@ include "../config.php";
                             <!-- Aqui va el telefono del usuario -->
                             <div class="col-md-6">
                               <p class="mb-1 text-muted">Número de Teléfono</p>
-                              <p class="mb-0">(+1-876) 8654 239 581</p>
+                              <p class="mb-0"><?php echo  $user_data->data->phone_number; ?></p> 
                             </div>
                           </div>
                         </li>
@@ -141,7 +166,7 @@ include "../config.php";
                             <!-- Aqui va el correo del usuario -->
                             <div class="col-md-6">
                               <p class="mb-1 text-muted">Email</p>
-                              <p class="mb-0">anshan.dh81@gmail.com</p>
+                              <p class="mb-0"> <?php echo  $user_data->data->email; ?></p>
                             </div>
                           </div>
                         </li>
