@@ -38,6 +38,35 @@ class Controller
         $user_data = $this->userController->getUser($request);
         return $user_data;
     }
+
+    public function updateUser($request, $redirect_url)
+    {
+        $result = $this->userController->updateUser($request);
+        session_start();
+        $_SESSION['message'] = $result->message;
+        $_SESSION['id_status'] = $result->code;
+        header('Location: ' . BASE_PATH . $redirect_url);
+    }
+
+    public function createUser($request, $requestFiles)
+    {
+        $imgTemp = tempnam(sys_get_temp_dir(),"tmp");
+        $urlImg = ($requestFiles['profile_photo_file']['tmp_name'] === "" ? $imgTemp:$requestFiles["profile_photo_file"]['tmp_name']);
+        
+        $transformed_request = (object)[
+            'name' => $request->name,
+            'lastname' => $request->lastname,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'created_by' => $request->created_by,
+            'password' => $request->password,
+            'profile_photo_file' => $urlImg,
+            'token' => $request->token
+        ];
+        
+        $result = $this->userController->createUser($transformed_request);
+        unlink($imgTemp);
+    }
 }
 
 $controller = new Controller();
@@ -52,9 +81,11 @@ if (isset($_POST['action'])) {
         case 'login': $controller->login($request); break;
 
         // User
+        case 'createUser': $controller->createUser($request, $_FILES); break;
+        case 'updateUser': $controller->updateUser($request, $_POST['redirect_url']); break;
 
         default: echo 'Controlador no encontrado';
     }
 } else {
-    echo 'Sistema de controladores';
+    echo "<script>console.log('Sistema de controladores')</script>";
 }

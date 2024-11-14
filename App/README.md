@@ -103,4 +103,39 @@ $request = (object)[
 
 JSON de los datos del usuario
 
+## updateUser
+
+### Peticion desde un Form
+
+### Accion: updateUser
+
+```html
+<input type="hidden" name="action" value="updateUser">
+```
+
+### Campos:
+* redirect_url <-- NOTA: Este campo lo empezare a incluir en varias peticiones, es para redireccionar a una pagina, solo ocupas poner lo que viene despues de la BASE_PATH. Por ejemplo:
+
+```html
+<input type="hidden" name="redirect_url" value="productos/detalles">
+```
+
+* token
+* name
+* lastname
+* email
+* phone_number
+* created_by
+* password
+* id
+
+### Resultado
+
+Redirecciona a la pagina que se haya ingresado en "redirect_url"
+Si sucedio algun error se podra checar en estos dos datos de sesion
+
+```php
+$_SESSION['message']
+$_SESSION['id_status']
+```
 ### Seguire llenando este documento cuando ponga mas metodos.
