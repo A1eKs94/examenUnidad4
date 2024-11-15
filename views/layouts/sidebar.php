@@ -27,6 +27,19 @@
           <label>Widget</label>
           <i class="ph-duotone ph-chart-pie"></i>
         </li>
+
+        <li class="pc-item pc-hasmenu">
+          <a href="#!" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-identification-card"></i>
+            </span>
+            <span class="pc-mtext">Usuarios</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
+          <ul class="pc-submenu">
+            <li class="pc-item"><a class="pc-link" href="">Lista de Usuarios</a></li>
+            <li class="pc-item"><a class="pc-link" href="">Nuevo Usuario</a></li>
+          </ul>
+        </li>
+
         <li class="pc-item">
           <a href="<?= BASE_PATH ?>products/" class="pc-link">
             <span class="pc-micon">
@@ -35,14 +48,6 @@
             <span class="pc-mtext">
               Productos
             </span>
-          </a>
-        </li>
-        <li class="pc-item">
-          <a href="../widget/w_user.html" class="pc-link">
-            <span class="pc-micon">
-              <i class="ph-duotone ph-identification-card"></i>
-            </span>
-            <span class="pc-mtext">User</span>
           </a>
         </li>
         <li class="pc-item">

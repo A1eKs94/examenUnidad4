@@ -78,7 +78,7 @@ include "../config.php";
                 <div class="col-sm-6 col-xl-3">
                   <div class="card product-card">
                     <div class="card-img-top">
-                      <a href="details/">
+                      <a href="detalles/">
                         <img src="../assets/images/productDefault.png" alt="image" class="img-prod img-fluid" />
                       </a>
                       <div class="card-body position-absolute end-0 top-0">
