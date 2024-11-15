@@ -176,48 +176,58 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                 </div>
                 
                 <div class="tab-pane fade" id="user-set-account" role="tabpanel" aria-labelledby="user-set-account-tab">
-                  <div class="card">
-                    <div class="card-header">
-                      <h4>Editar Perfil</h4>
+
+                  <form action="<?php echo BASE_PATH; ?>api" method="POST">
+                    <div class="card">
+                      <div class="card-header">
+                        <h4>Editar Perfil</h4>
+                      </div>
+                      <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <input type="hidden" name="action" value="updateUser">
+                            <input type="hidden" name="redirect_url" value="profile">
+                            <input type="hidden" name="token" value="<?php echo  $token; ?>">
+                            <input type="hidden" name="id" value="<?php echo  $user_id; ?>">
+
+                            <!-- Campo para nombre -->
+                            <li class="list-group-item px-0 pt-0">
+                                <div class="row mb-0">
+                                    <label class="col-form-label col-md-4 col-sm-12 text-md-end">Nombre<span class="text-danger">*</span></label>
+                                    <div class="col-md-8 col-sm-12">
+                                        <input type="text" id="name" name="name" class="form-control" value="<?php echo $user_data->data->name; ?>" required />
+                                    </div>
+                                </div>
+                            </li>
+
+                            <!-- Campo para correo -->
+                            <li class="list-group-item px-0">
+                                <div class="row mb-0">
+                                    <label class="col-form-label col-md-4 col-sm-12 text-md-end">Correo Electrónico <span class="text-danger">*</span></label>
+                                    <div class="col-md-8 col-sm-12">
+                                        <input type="email" id="email" name="email" class="form-control" value="<?php echo $user_data->data->email; ?>" required />
+                                    </div>
+                                </div>
+                            </li>
+
+                            <!-- Campo para teléfono -->
+                            <li class="list-group-item px-0">
+                                <div class="row mb-0">
+                                    <label class="col-form-label col-md-4 col-sm-12 text-md-end">Número de Teléfono<span class="text-danger">*</span></label>
+                                    <div class="col-md-8 col-sm-12">
+                                        <input type="text" id="phoneNumber" name="phone_number" class="form-control" value="<?php echo $user_data->data->phone_number; ?>" />
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                      </div>
                     </div>
-                    <div class="card-body">
-                      <ul class="list-group list-group-flush">
-                        <li class="list-group-item px-0 pt-0">
-                          <div class="row mb-0">
-                            <label class="col-form-label col-md-4 col-sm-12 text-md-end">Nombre<span class="text-danger">*</span></label>
-                            <!-- Aqui va el nombre de usuario -->
-                            <div class="col-md-8 col-sm-12">
-                              <input type="text" class="form-control" value="Nombre de usuario" required/>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="list-group-item px-0">
-                          <div class="row mb-0">
-                            <!-- Aqui va el correo del usuario -->
-                            <label class="col-form-label col-md-4 col-sm-12 text-md-end">Correo Electrónico <span class="text-danger">*</span></label>
-                            <div class="col-md-8 col-sm-12">
-                              <input type="email" class="form-control" disabled value="demo@sample.com" required/>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="list-group-item px-0">
-                          <div class="row mb-0">
-                            <label class="col-form-label col-md-4 col-sm-12 text-md-end">Número de Teléfono<span class="text-danger">*</span></label>
-                            <!-- Aqui va el número del usuario -->
-                            <div class="col-md-8 col-sm-12">
-                              <input type="text" class="form-control" value="1234567890" />
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
+                    <div class="card">
+                        <div class="card-body text-end">
+                            <button type="button" class="btn btn-outline-dark me-2" onclick="vaciarCampos()">Vaciar</button>
+                            <button type="submit" class="btn btn-primary">Actualizar Perfil</button>
+                        </div>
                     </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-body text-end">
-                      <button class="btn btn-outline-dark me-2">Vaciar</button>
-                      <button class="btn btn-primary">Actualizar Perfil</button>
-                    </div>
-                  </div>
+                  </form>  
                 </div>
 
                 <div class="tab-pane fade " id="user-set-orders" role="tabpanel" aria-labelledby="user-set-orders-tab">
@@ -305,6 +315,14 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
   <!-- Required Js -->
   
   <?php include "layouts/scripts.php"?>
+
+  <script>
+    function vaciarCampos() {
+        document.getElementById("name").value = '';
+        document.getElementById("email").value = '';
+        document.getElementById("phoneNumber").value = '';
+    }
+</script>
 
 </body>
 <!-- [Body] end -->
