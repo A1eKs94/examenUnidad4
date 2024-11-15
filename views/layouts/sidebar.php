@@ -1,5 +1,5 @@
 <?php
-include "../config.php";
+// include "../config.php";
 
 if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
     $user_id = $_SESSION['profile']->data->id;  

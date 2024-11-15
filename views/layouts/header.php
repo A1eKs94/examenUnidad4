@@ -1,3 +1,30 @@
+<?php
+// include "../config.php";
+
+if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
+    $user_id = $_SESSION['profile']->data->id;  
+    $token = $_SESSION['token'];  
+    require_once "../App/controllers/Controller.php";
+
+
+    /* <?php            
+    echo '<pre>';
+    print_r($_SESSION['profile']);
+    echo '</pre>';
+    ?> */
+    
+    $request = (object)[
+        'id' => $user_id,  
+        'token' => $token   
+    ];
+    $user_data = $controller->getUser($request);
+} else {
+    echo "Error: El perfil del usuario no está disponible o no se encuentra en la sesión.";
+    exit;
+}
+
+?>
+
 <header class="pc-header">
     <div class="header-wrapper"> <!-- [Mobile Media Block] start -->
       <div class="me-auto pc-mob-drp">
@@ -350,8 +377,8 @@
                           <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="wid-50 rounded-circle" />
                         </div>
                         <div class="flex-grow-1 mx-3">
-                          <h5 class="mb-0">Carson Darrin</h5>
-                          <a class="link-primary" href="mailto:carson.darrin@company.io">carson.darrin@company.io</a>
+                          <h5 class="mb-0"><?php echo  $user_data->data->name; ?></h5>
+                          <a class="link-primary" href="mailto:carson.darrin@company.io"><?php echo  $user_data->data->email; ?></a>
                         </div>
                         <span class="badge bg-primary">PRO</span>
                       </div>
