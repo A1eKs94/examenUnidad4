@@ -35,8 +35,8 @@
             </span>
             <span class="pc-mtext">Usuarios</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
           <ul class="pc-submenu">
-            <li class="pc-item"><a class="pc-link" href="">Lista de Usuarios</a></li>
-            <li class="pc-item"><a class="pc-link" href="">Nuevo Usuario</a></li>
+            <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>users/list/">Lista de Usuarios</a></li>
+            <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>users/crear/">Nuevo Usuario</a></li>
           </ul>
         </li>
 

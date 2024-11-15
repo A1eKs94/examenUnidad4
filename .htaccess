@@ -4,6 +4,8 @@ RewriteEngine on
 RewriteRule ^auth/?$ index.php
 RewriteRule ^profile/?$ views/account-profile.php
 RewriteRule ^home/?$ views/home.php
+RewriteRule ^users/list/?$ views/users/usersList.php
+RewriteRule ^users/crear/?$ views/users/createUser.php
 RewriteRule ^crear-producto/?$ views/create.php
 RewriteRule ^detalles/?$ views/details.php
 RewriteRule ^api/?$ App/controllers/Controller.php
