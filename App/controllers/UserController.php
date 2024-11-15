@@ -75,12 +75,12 @@ class UserController
 
         $data = array(
             'name' => $request->name,
-            'lastname' => $request->lastname,
+            //'lastname' => $request->lastname,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
-            'created_by' => $request->created_by,
-            'role' => 'Administrador',
-            'password' => $request->password,
+            //'created_by' => $request->created_by,
+            //'role' => 'Administrador',
+            //'password' => $request->password,
             'id' => $request->id,
         );
 
