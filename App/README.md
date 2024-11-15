@@ -138,4 +138,35 @@ Si sucedio algun error se podra checar en estos dos datos de sesion
 $_SESSION['message']
 $_SESSION['id_status']
 ```
+
+## createUser
+
+### Peticion desde un Form
+
+### Accion: createUser
+
+```html
+<input type="hidden" name="action" value="createUser">
+```
+
+### Campos:
+* name
+* lastname
+* email
+* phone_number
+* created_by
+* password
+* profile_photo_file
+* redirect_url
+* token
+
+### Resultado
+
+Redirecciona a la pagina que se haya ingresado en "redirect_url"
+Si sucedio algun error se podra checar en estos dos datos de sesion
+
+```php
+$_SESSION['message']
+$_SESSION['id_status']
+```
 ### Seguire llenando este documento cuando ponga mas metodos.

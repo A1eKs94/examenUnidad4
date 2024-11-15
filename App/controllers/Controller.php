@@ -65,7 +65,13 @@ class Controller
         ];
         
         $result = $this->userController->createUser($transformed_request);
+        
+        session_start();
+        $_SESSION["message"] = $result->message;
+        $_SESSION["id_status"] = $result->code;
+        
         unlink($imgTemp);
+        header('Location: ' . BASE_PATH . $request->redirect_url);
     }
 }
 
