@@ -86,7 +86,7 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                         alt="User image" />
                     </div>
                     <!-- Aqui va el nombre de usuario -->
-                    <h5 class="mb-0">William Bond</h5>
+                    <h5 class="mb-0"><?php echo  $user_data->data->name; ?></h5>
                   </div>
                 </div>
                 <!-- Aqui va el menu de opciones -->
