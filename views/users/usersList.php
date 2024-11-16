@@ -84,7 +84,7 @@ include "../../config.php";
                                             <td>VIP</td>
                                             <!-- Botones de acciones -->
                                             <td>
-                                                <a href="" class="btn btn-light-primary btn-sm">Ver</a>
+                                                <a href="<?= BASE_PATH ?>users/ver/" class="btn btn-light-primary btn-sm">Ver</a>
                                                 <a href="#"
                                                     class="btn btn-light-info btn-sm"
                                                     data-bs-toggle="modal"
