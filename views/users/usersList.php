@@ -85,7 +85,13 @@ include "../../config.php";
                                             <!-- Botones de acciones -->
                                             <td>
                                                 <a href="" class="btn btn-light-primary btn-sm">Ver</a>
-                                                <a href="" class="btn btn-light-info btn-sm">Editar</a>
+                                                <a href="#"
+                                                    class="btn btn-light-info btn-sm"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#editUserModal">
+                                                    Editar
+                                                </a>
+
                                                 <a href="" class="btn btn-light-danger btn-sm">Eliminar</a>
                                             </td>
                                         </tr>
@@ -101,12 +107,22 @@ include "../../config.php";
             <!-- [ Main Content ] end -->
         </div>
     </section>
+
+    <?php include "../../views/layouts/modalUsersList.php" ?>
     <!-- [ Main Content ] end -->
     <?php include "../../views/layouts/footer.php" ?>
     <!-- Required Js -->
     <?php include "../../views/layouts/scripts.php" ?>
 
-
+    <script>
+        function loadUserData(id, name, email, phone, level) {
+            document.getElementById('editUserId').value = id;
+            document.getElementById('editUserName').value = name;
+            document.getElementById('editUserEmail').value = email;
+            document.getElementById('editUserPhone').value = phone;
+            document.getElementById('editUserLevel').value = level;
+        }
+    </script>
 
 </body>
 <!-- [Body] end -->
