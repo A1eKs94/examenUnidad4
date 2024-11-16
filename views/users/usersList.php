@@ -1,6 +1,7 @@
 <?php
 
 include_once __DIR__ . '/../../config.php';
+session_start();
 
 ?>
 
@@ -109,11 +110,11 @@ include_once __DIR__ . '/../../config.php';
         </div>
     </section>
 
-    <?php include "../../views/layouts/modalUsersList.php" ?>
+    <?php include_once __DIR__ . "/../../views/layouts/modalUsersList.php" ?>
     <!-- [ Main Content ] end -->
-    <?php include "../../views/layouts/footer.php" ?>
+    <?php include_once __DIR__ . "/../../views/layouts/footer.php" ?>
     <!-- Required Js -->
-    <?php include "../../views/layouts/scripts.php" ?>
+    <?php include_once __DIR__ . "/../../views/layouts/scripts.php" ?>
 
     <script>
         function loadUserData(id, name, email, phone, level) {

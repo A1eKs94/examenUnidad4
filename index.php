@@ -1,6 +1,6 @@
 <?php
 
-include "config.php";
+include_once __DIR__ .  "/config.php";
 
 session_start();
 
@@ -17,7 +17,7 @@ if (isset($_SESSION['error_message'])) {
 <!-- [Head] start -->
 
 <head>
-    <?php include "views/layouts/head.php" ?>
+    <?php include_once __DIR__ . "/views/layouts/head.php" ?>
 </head>
 <!-- [Head] end -->
 
@@ -65,7 +65,7 @@ if (isset($_SESSION['error_message'])) {
     </div>
     <!-- [ Main Content ] end -->
 
-    <?php include "views/layouts/scripts.php" ?>
+    <?php include_once __DIR__ . "/views/layouts/scripts.php" ?>
 
 
 </body>

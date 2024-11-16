@@ -1,10 +1,10 @@
 <?php
-// include "../config.php";
+include_once __DIR__ . "/../../config.php";
 
 if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
   $user_id = $_SESSION['profile']->data->id;
   $token = $_SESSION['token'];
-  require_once "../App/controllers/Controller.php";
+  require_once __DIR__ . "/../../App/controllers/AuthController.php";
 
 
   /* <?php            

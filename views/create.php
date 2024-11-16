@@ -1,6 +1,8 @@
 <?php
 
-include "../config.php";
+include_once __DIR__ .  "/../config.php";
+session_start();
+
 
 ?>
 <!doctype html>
@@ -8,7 +10,7 @@ include "../config.php";
 <!-- [Head] start -->
 
 <head>
-  <?php include "../views/layouts/head.php" ?>
+  <?php include_once __DIR__ . "/../views/layouts/head.php" ?>
 </head>
 <!-- [Head] end -->
 <!-- [Body] Start -->
@@ -22,8 +24,8 @@ include "../config.php";
   </div>
 
   <!-- [ Pre-loader ] End -->
-  <?php include "../views/layouts/sidebar.php" ?>
-  <?php include "../views/layouts/header.php" ?>
+  <?php include_once __DIR__ .  "/../views/layouts/sidebar.php" ?>
+  <?php include_once __DIR__ .  "/../views/layouts/header.php" ?>
 
   <!-- [ Main Content ] start -->
   <div class="pc-container">
@@ -118,9 +120,9 @@ include "../config.php";
     </div>
   </div>
 
-  <?php include "layouts/footer.php" ?>
+  <?php include_once __DIR__ .  "/layouts/footer.php" ?>
 
-  <?php include "layouts/scripts.php" ?>
+  <?php include_once __DIR__ . "/layouts/scripts.php" ?>
 
 </body>
 <!-- [Body] end -->

@@ -1,12 +1,13 @@
 <?php
-include "../../config.php";
+include_once __DIR__ .  "/../../config.php";
+session_start();
 ?>
 <!doctype html>
 <html lang="en">
 <!-- [Head] start -->
 
 <head>
-    <?php include "../../views/layouts/head.php" ?>
+    <?php include_once __DIR__ . "../../views/layouts/head.php" ?>
 </head>
 <!-- [Head] end -->
 <!-- [Body] Start -->
@@ -20,10 +21,10 @@ include "../../config.php";
     </div>
     <!-- [ Pre-loader ] End -->
     <!-- [ Sidebar Menu ] start -->
-    <?php include "../../views/layouts/sidebar.php" ?>
+    <?php include_once __DIR__ .  "../../views/layouts/sidebar.php" ?>
     <!-- [ Sidebar Menu ] end -->
     <!-- [ Header Topbar ] start -->
-    <?php include "../../views/layouts/header.php" ?>
+    <?php include_once __DIR__ .  "../../views/layouts/header.php" ?>
     <!-- [ Header ] end -->
 
 

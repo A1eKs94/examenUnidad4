@@ -1,5 +1,5 @@
 <?php
-include "../config.php";
+include_once __DIR__ . "/../config.php";
 
 session_start();
 
@@ -31,7 +31,7 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
 <!-- [Head] start -->
 
 <head>
-  <?php include "layouts/head.php" ?>
+  <?php include_once __DIR__ .  "/layouts/head.php" ?>
 </head>
 <!-- [Head] end -->
 <!-- [Body] Start -->
@@ -45,10 +45,10 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
   </div>
   <!-- [ Pre-loader ] End -->
   <!-- [ Sidebar Menu ] start -->
-  <?php include "layouts/sidebar.php" ?>
+  <?php include_once __DIR__ . "/layouts/sidebar.php" ?>
   <!-- [ Sidebar Menu ] end -->
   <!-- [ Header Topbar ] start -->
-  <?php include "layouts/header.php" ?>
+  <?php include_once __DIR__ . "/layouts/header.php" ?>
   <!-- [ Header ] end -->
 
 

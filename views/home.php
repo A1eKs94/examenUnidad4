@@ -1,7 +1,7 @@
 <?php
 
 include_once __DIR__ . '/../config.php';
-
+session_start();
 
 ?>
 <!doctype html>
@@ -10,7 +10,7 @@ include_once __DIR__ . '/../config.php';
 
 <head>
 
-  <?php include __DIR__ . '/layouts/head.php' ?>
+  <?php include_once __DIR__ . '/layouts/head.php' ?>
 </head>
 <!-- [Head] end -->
 <!-- [Body] Start -->
@@ -24,8 +24,8 @@ include_once __DIR__ . '/../config.php';
   </div>
 
   <!-- [ Pre-loader ] End -->
-  <?php include __DIR__ . '/layouts/sidebar.php' ?>
-  <?php include __DIR__ . '/layouts/header.php' ?>
+  <?php include_once __DIR__ . '/layouts/sidebar.php' ?>
+  <?php include_once __DIR__ . '/layouts/header.php' ?>
 
   <!-- [ Main Content ] start -->
   <div class="pc-container">
@@ -210,8 +210,8 @@ include_once __DIR__ . '/../config.php';
   </div>
   <!-- [ Main Content ] end -->
 
-  <?php include __DIR__ . '/layouts/footer.php' ?>
-  <?php include __DIR__ . '/layouts/scripts.php' ?>
+  <?php include_once __DIR__ .  '/layouts/footer.php' ?>
+  <?php include_once __DIR__ .  '/layouts/scripts.php' ?>
 </body>
 <!-- [Body] end -->
 
