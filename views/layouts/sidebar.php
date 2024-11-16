@@ -1,3 +1,29 @@
+<?php
+// include "../config.php";
+
+if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
+  $user_id = $_SESSION['profile']->data->id;
+  $token = $_SESSION['token'];
+  require_once "../App/controllers/Controller.php";
+
+
+  /* <?php            
+    echo '<pre>';
+    print_r($_SESSION['profile']);
+    echo '</pre>';
+    ?> */
+
+  $request = (object)[
+    'id' => $user_id,
+    'token' => $token
+  ];
+  $user_data = $controller->getUser($request);
+} else {
+  echo "Error: El perfil del usuario no está disponible o no se encuentra en la sesión.";
+  exit;
+}
+
+?>
 <!-- [ Sidebar Menu ] start -->
 <nav class="pc-sidebar">
   <div class="navbar-wrapper">
@@ -78,8 +104,8 @@
               <a href="#" class="arrow-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,20">
                 <div class="d-flex align-items-center">
                   <div class="flex-grow-1 me-2">
-                    <h6 class="mb-0">Jonh Smith</h6>
-                    <small>Premiun</small>
+                    <h6 class="mb-0"><?php echo  $user_data->data->name; ?></h6>
+                    <small>Administrator</small>
                   </div>
                   <div class="flex-shrink-0">
                     <div class="btn btn-icon btn-link-secondary avtar">
