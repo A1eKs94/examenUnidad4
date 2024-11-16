@@ -7,7 +7,7 @@ session_start();
 <!-- [Head] start -->
 
 <head>
-    <?php include_once __DIR__ . "../../views/layouts/head.php" ?>
+    <?php include_once __DIR__ . "/../../views/layouts/head.php" ?>
 </head>
 <!-- [Head] end -->
 <!-- [Body] Start -->
@@ -21,10 +21,10 @@ session_start();
     </div>
     <!-- [ Pre-loader ] End -->
     <!-- [ Sidebar Menu ] start -->
-    <?php include_once __DIR__ .  "../../views/layouts/sidebar.php" ?>
+    <?php include_once __DIR__ .  "/../../views/layouts/sidebar.php" ?>
     <!-- [ Sidebar Menu ] end -->
     <!-- [ Header Topbar ] start -->
-    <?php include_once __DIR__ .  "../../views/layouts/header.php" ?>
+    <?php include_once __DIR__ .  "/../../views/layouts/header.php" ?>
     <!-- [ Header ] end -->
 
 
@@ -220,12 +220,12 @@ session_start();
 
     <!-- [ Main Content ] end -->
 
-    <?php include "../layouts/footer.php" ?>
+    <?php include_once __DIR__ . "/../layouts/footer.php" ?>
 
 
     <!-- Required Js -->
 
-    <?php include "../layouts/scripts.php" ?>
+    <?php include_once __DIR__ . "/../layouts/scripts.php" ?>
 
 </body>
 <!-- [Body] end -->
