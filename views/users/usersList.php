@@ -42,6 +42,7 @@ include "../../config.php";
                             <div class="page-header-title">
                                 <h2 class="mb-0">Tabla de Usuarios</h2>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -52,8 +53,9 @@ include "../../config.php";
                 <!-- [ basic-table ] start -->
                 <div class="col-xl-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <h5>Tabla de usuarios</h5>
+                            <a href="<?= BASE_PATH ?>users/crear/" class="btn btn-primary btn-sm">Añadir Usuario</a>
                         </div>
                         <div class="card-body table-border-style">
                             <div class="table-responsive">
@@ -63,24 +65,24 @@ include "../../config.php";
                                             <th>ID</th>
                                             <th>Nombre</th>
                                             <th>Correo</th>
-                                            <th>Telefono</th>
+                                            <th>Teléfono</th>
                                             <th>Nivel</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <!-- Aqui va el id -->
+                                            <!-- Aquí va el id -->
                                             <td>1</td>
-                                            <!-- Aqui va el nombre -->
+                                            <!-- Aquí va el nombre -->
                                             <td>Sergio</td>
-                                            <!-- Aqui va el correo -->
+                                            <!-- Aquí va el correo -->
                                             <td>sergio@gmail.com</td>
-                                            <!-- Aqui va el telefono -->
+                                            <!-- Aquí va el teléfono -->
                                             <td>123456</td>
-                                            <!-- Aqui va el nivel -->
+                                            <!-- Aquí va el nivel -->
                                             <td>VIP</td>
-                                            <!-- botones de acciones -->
+                                            <!-- Botones de acciones -->
                                             <td>
                                                 <a href="" class="btn btn-light-primary btn-sm">Ver</a>
                                                 <a href="" class="btn btn-light-info btn-sm">Editar</a>
@@ -95,6 +97,7 @@ include "../../config.php";
                 </div>
                 <!-- [ basic-table ] end -->
             </div>
+
             <!-- [ Main Content ] end -->
         </div>
     </section>
