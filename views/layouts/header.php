@@ -1,4 +1,6 @@
 <?php
+
+
 // include "../config.php";
 
 if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
@@ -77,6 +79,17 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
             </a>
           </div>
         </li>
+        <li class="dropdown pc-h-item">
+          <a
+            class="pc-head-link me-0"
+            data-bs-toggle="dropdown"
+            href="#"
+            role="button"
+            aria-haspopup="false"
+            aria-expanded="false">
+            <i class="ph-duotone ph-shopping-cart"></i>
+          </a>
+        </li>
         <li class="dropdown pc-h-item header-user-profile">
           <a
             class="pc-head-link dropdown-toggle arrow-none me-0"
@@ -107,6 +120,12 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                     </div>
                   </li>
                   <li class="list-group-item">
+                    <a href="#" class="dropdown-item">
+                      <span class="d-flex align-items-center">
+                        <i class="ph-duotone ph-shopping-cart"></i>
+                        <span class="pc-mtext">Carrito de Compras</span>
+                      </span>
+                    </a>
                     <a href="#" class="dropdown-item">
                       <span class="d-flex align-items-center">
                         <i class="ph-duotone ph-user-circle"></i>

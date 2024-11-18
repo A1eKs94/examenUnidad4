@@ -6,7 +6,6 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
   $token = $_SESSION['token'];
   require_once __DIR__ . "/../../App/controllers/Controller.php";
 
-
   /* <?php            
     echo '<pre>';
     print_r($_SESSION['profile']);
@@ -89,19 +88,12 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
           </a>
         </li>
         <li class="pc-item">
-          <a href="../widget/w_data.html" class="pc-link">
+          <a href="<?= BASE_PATH ?>carrito/" class="pc-link">
             <span class="pc-micon">
-              <i class="ph-duotone ph-database"></i>
+              <i class="ph-duotone ph-shopping-cart"></i>
             </span>
-            <span class="pc-mtext">Data</span>
+            <span class="pc-mtext">Carrito de Compras</span>
           </a>
-        </li>
-        <li class="pc-item">
-          <a href="../widget/w_chart.html" class="pc-link">
-            <span class="pc-micon">
-              <i class="ph-duotone ph-chart-pie"></i>
-            </span>
-            <span class="pc-mtext">Chart</span></a>
         </li>
     </div>
 

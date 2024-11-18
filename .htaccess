@@ -15,6 +15,7 @@ RewriteRule ^clients/ver/?$ views/clients/viewClient.php
 
 RewriteRule ^crear-producto/?$ views/products/create.php
 RewriteRule ^detalles/?$ views/products/details.php
+RewriteRule ^carrito/?$ views/products/shoppingCart.php
 
 RewriteRule ^/home/crear-producto/?$ views/products/create.php
 RewriteRule ^/home/detalles/?$ views/products/details.php
