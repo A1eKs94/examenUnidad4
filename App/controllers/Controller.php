@@ -33,6 +33,12 @@ class Controller
     }
 
     // User Controllers
+    public function getUsers($token)
+    {
+        $result = $this->userController->index($token);
+        return $result;
+    }
+
     public function getUser($request)
     {
         $user_data = $this->userController->getUser($request);

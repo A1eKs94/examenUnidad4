@@ -194,4 +194,21 @@ Si sucedio algun error se podra checar en estos dos datos de sesion
 $_SESSION['message']
 $_SESSION['id_status']
 ```
+
+## getUser
+
+### Peticion desde una funcion
+
+### funcion Backend: getUsers($token)
+
+### Campos
+
+```php
+$token // Una variable que solo tenga el token del usuario
+```
+
+### Resultado
+
+JSON de los datos de los usuarios
+
 ### Seguire llenando este documento cuando ponga mas metodos.
