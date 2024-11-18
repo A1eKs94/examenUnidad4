@@ -69,7 +69,7 @@ session_start();
                     </form>
                   </li>
                 </ul>
-                <a href="create" class="ms-auto">
+                <a href="crear-producto" class="ms-auto">
                   <button class="btn btn-secondary btn-prod-card">Añadir Producto</button>
                 </a>
               </div>
@@ -80,7 +80,7 @@ session_start();
                 <div class="col-sm-6 col-xl-3">
                   <div class="card product-card">
                     <div class="card-img-top">
-                      <a href="detalles/">
+                      <a href="/detalles">
                         <img src="../assets/images/productDefault.png" alt="image" class="img-prod img-fluid" />
                       </a>
                       <div class="card-body position-absolute end-0 top-0">

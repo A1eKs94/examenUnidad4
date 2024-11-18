@@ -1,16 +1,14 @@
 <?php
 
-include_once __DIR__ .  "/../config.php";
+include_once __DIR__ .  "../../../config.php";
 session_start();
-
-
 ?>
 <!doctype html>
 <html lang="en">
 <!-- [Head] start -->
 
 <head>
-  <?php include_once __DIR__ . "/../views/layouts/head.php" ?>
+  <?php include_once __DIR__ . "/../../views/layouts/head.php" ?>
 </head>
 <!-- [Head] end -->
 <!-- [Body] Start -->
@@ -24,8 +22,8 @@ session_start();
   </div>
 
   <!-- [ Pre-loader ] End -->
-  <?php include_once __DIR__ .  "/../views/layouts/sidebar.php" ?>
-  <?php include_once __DIR__ .  "/../views/layouts/header.php" ?>
+  <?php include_once __DIR__ .  "/../../views/layouts/sidebar.php" ?>
+  <?php include_once __DIR__ .  "/../../views/layouts/header.php" ?>
 
   <!-- [ Main Content ] start -->
   <div class="pc-container">
@@ -55,7 +53,7 @@ session_start();
             <div class="card-body">
               <div class="mb-3">
                 <label class="form-label">Nombre</label>
-                <input type="text" class="form-control" placeholder="Enter Product Name" name="name" />
+                <input type="text" class="form-control" placeholder="Nombre del producto" name="name" />
               </div>
               <div class="mb-3">
                 <label class="form-label">Marca</label>
@@ -65,15 +63,15 @@ session_start();
               </div>
               <div class="mb-3">
                 <label class="form-label">Características</label>
-                <input type="text" class="form-control" placeholder="Enter Product Name" name="features" />
+                <input type="text" class="form-control" placeholder="Características del producto" name="features" />
               </div>
               <div class="mb-3">
                 <label class="form-label">Slug</label>
-                <input type="text" class="form-control" placeholder="Enter Product Name" name="slug" />
+                <input type="text" class="form-control" placeholder="Slug del producto" name="slug" />
               </div>
               <div class="mb-3">
                 <label class="form-label">Descripción</label>
-                <textarea class="form-control" placeholder="Enter Product Description" name="description"></textarea>
+                <textarea class="form-control" placeholder="Descripción del producto" name="description"></textarea>
               </div>
               <div class="mb-3">
                 <label class="form-label">Categoría</label>
@@ -82,11 +80,11 @@ session_start();
                     <!-- Opciones de categoría irían aquí -->
                     <option value="">Selecciona una categoría</option>
                   </select>
-                  <button class="btn btn-outline-secondary ms-2" type="button">Agregar otra categoría</button>
                 </div>
               </div>
 
               <div class="mb-3">
+                <label class="form-label">Añadir nueva categoría</label>
                 <input type="text" class="form-control" placeholder="Escribe una nueva categoría" name="new_category" />
                 <button class="btn btn-outline-secondary mt-2" type="button">Añadir</button>
               </div>
@@ -102,7 +100,10 @@ session_start();
               <h5>Cargar imagen</h5>
             </div>
             <div class="card-body">
-              <div class="mb-0">
+              <div class="mb-3" style="text-align: center;">
+                <img src="../../assets/images/user-default.jpg" alt="Imagen de usuario" style="width: 500px; height: auto; object-fit: contain;" />
+              </div>
+              <div class="mb-0" style="text-align: center;">
                 <label class="btn btn-outline-secondary" for="flupld"><i class="ti ti-upload me-2"></i>Cargar</label>
                 <input type="file" id="flupld" class="d-none" name="cover" />
               </div>
@@ -120,9 +121,9 @@ session_start();
     </div>
   </div>
 
-  <?php include_once __DIR__ .  "/layouts/footer.php" ?>
+  <?php include_once __DIR__ .  "/../layouts/footer.php" ?>
 
-  <?php include_once __DIR__ . "/layouts/scripts.php" ?>
+  <?php include_once __DIR__ . "/../layouts/scripts.php" ?>
 
 </body>
 <!-- [Body] end -->

@@ -13,6 +13,10 @@ RewriteRule ^clients/list/?$ views/clients/clientsList.php
 RewriteRule ^clients/crear/?$ views/clients/createClient.php
 RewriteRule ^clients/ver/?$ views/clients/viewClient.php
 
-RewriteRule ^crear-producto/?$ views/create.php
-RewriteRule ^detalles/?$ views/details.php
+RewriteRule ^crear-producto/?$ views/products/create.php
+RewriteRule ^detalles/?$ views/products/details.php
+
+RewriteRule ^/home/crear-producto/?$ views/products/create.php
+RewriteRule ^/home/detalles/?$ views/products/details.php
+
 RewriteRule ^api/?$ App/controllers/Controller.php
