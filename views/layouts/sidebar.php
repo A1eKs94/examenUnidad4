@@ -66,6 +66,18 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
           </ul>
         </li>
 
+        <li class="pc-item pc-hasmenu">
+          <a href="#!" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-identification-card"></i>
+            </span>
+            <span class="pc-mtext">Clientes</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
+          <ul class="pc-submenu">
+            <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>clients/list/">Lista de Clientes</a></li>
+            <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>clients/crear/">Nuevo Cliente</a></li>
+          </ul>
+        </li>
+
         <li class="pc-item">
           <a href="<?= BASE_PATH ?>products/" class="pc-link">
             <span class="pc-micon">
