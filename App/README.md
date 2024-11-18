@@ -169,4 +169,29 @@ Si sucedio algun error se podra checar en estos dos datos de sesion
 $_SESSION['message']
 $_SESSION['id_status']
 ```
+
+## deleteUser
+
+### Peticion desde un Form
+
+### Accion: deleteUser
+
+```html
+<input type="hidden" name="action" value="deleteUser">
+```
+
+### Campos:
+* id <-- ID del usuario a eliminar
+* token
+* redirect_url
+
+### Resultado
+
+Redirecciona a la pagina que se haya ingresado en "redirect_url"
+Si sucedio algun error se podra checar en estos dos datos de sesion
+
+```php
+$_SESSION['message']
+$_SESSION['id_status']
+```
 ### Seguire llenando este documento cuando ponga mas metodos.

@@ -73,6 +73,15 @@ class Controller
         unlink($imgTemp);
         header('Location: ' . BASE_PATH . $request->redirect_url);
     }
+
+    public function deleteUser($request)
+    {
+        $result = $this->userController->deleteUser($request);
+        session_start();
+        $_SESSION['message'] = $result->message;
+        $_SESSION['id_status'] = $result->code;
+        header('Location: ' . BASE_PATH . $request->redirect_url);
+    }
 }
 
 $controller = new Controller();
@@ -89,6 +98,7 @@ if (isset($_POST['action'])) {
         // User
         case 'createUser': $controller->createUser($request, $_FILES); break;
         case 'updateUser': $controller->updateUser($request, $_POST['redirect_url']); break;
+        case 'deleteUser': $controller->deleteUser($request); break;
 
         default: echo 'Controlador no encontrado';
     }
