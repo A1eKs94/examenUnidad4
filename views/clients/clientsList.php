@@ -90,7 +90,7 @@ session_start();
                                                 <a href="#"
                                                     class="btn btn-light-info btn-sm"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#editUserModal">
+                                                    data-bs-target="#editClientModal">
                                                     Editar
                                                 </a>
 
