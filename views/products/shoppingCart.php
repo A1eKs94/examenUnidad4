@@ -1,10 +1,10 @@
-<?php include "../../config.php"; ?>
+<?php include_once __DIR__ . "../../../config.php"; ?>
 <!doctype html>
 <html lang="en">
 <!-- [Head] start -->
 
 <head>
-    <?php include "../layouts/head.php"; ?>
+    <?php include_once __DIR__ . "../../layouts/head.php"; ?>
 </head>
 <!-- [Head] end -->
 <!-- [Body] Start -->
@@ -18,8 +18,8 @@
     </div>
     <!-- [ Pre-loader ] End -->
 
-    <?php include "../layouts/sidebar.php"; ?>
-    <?php include "../layouts/header.php"; ?>
+    <?php include_once __DIR__ . "../../layouts/sidebar.php"; ?>
+    <?php include_once __DIR__ . "../../layouts/header.php"; ?>
 
     <!-- [ Main Content ] start -->
     <div class="pc-container">
@@ -120,8 +120,8 @@
     </div>
     <!-- [ Main Content ] end -->
 
-    <?php include "../layouts/footer.php"; ?>
-    <?php include "../layouts/scripts.php"; ?>
+    <?php include_once __DIR__ . "../../layouts/footer.php"; ?>
+    <?php include_once __DIR__ . "../../layouts/scripts.php"; ?>
 
 </body>
 <!-- [Body] end -->

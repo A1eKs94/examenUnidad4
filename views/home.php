@@ -70,7 +70,7 @@ session_start();
                     </form>
                   </li>
                 </ul>
-                <a href="crear-producto" class="ms-auto">
+                <a href="/crear-producto" class="ms-auto">
                   <button class="btn btn-secondary btn-prod-card">Añadir Producto</button>
                 </a>
               </div>
@@ -82,7 +82,7 @@ session_start();
                   <div class="card product-card">
                     <div class="card-img-top">
                       <a href="detalles/">
-                        <img src="../assets/images/productDefault.png" alt="image" class="img-prod img-fluid" />
+                        <img src="<?= BASE_PATH ?>assets/images/productDefault.png" alt="image" class="img-prod img-fluid" />
                       </a>
                       <div class="card-body position-absolute end-0 top-0">
                       </div>
@@ -101,7 +101,9 @@ session_start();
                       <p class="card-text">Descripción</p>
                       <div class="d-flex">
                         <div class="flex-grow-1 ms-3">
-                          <button class="btn btn-light-warning">Editar</button>
+                          <a href="editar-producto/">
+                            <button class="btn btn-light-warning">Editar</button>
+                          </a>
                           <button class="btn btn-light-danger">Eliminar</button>
                         </div>
                       </div>
