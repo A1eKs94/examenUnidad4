@@ -33,11 +33,21 @@ class Controller
     }
 
     // User Controllers
-    public function getUsers($token)
+    public function getUsers($request)
     {
-        $result = $this->userController->index($token);
-        return $result;
+        $result = $this->userController->index($request);  
+        if (isset($result->data)) {
+            if (is_object($result->data)) {
+                return [$result->data]; 
+            }
+            if (is_array($result->data)) {
+                return $result->data;
+            }
+        }
+
+        return (object)["code" => -1, "message" => "No se encontraron usuarios"];
     }
+
 
     public function getUser($request)
     {
@@ -45,14 +55,22 @@ class Controller
         return $user_data;
     }
 
-    public function updateUser($request, $redirect_url)
+
+    public function updateUser($request, $redirect_url, $requestFiles)
     {
+        $imgTemp = tempnam(sys_get_temp_dir(), "tmp");
+        $urlImg = ($requestFiles['profile_photo_file']['tmp_name'] === "" ? $imgTemp : $requestFiles["profile_photo_file"]['tmp_name']);
+
+        $request->urlImg = $urlImg;
+
         $result = $this->userController->updateUser($request);
+
         session_start();
         $_SESSION['message'] = $result->message;
         $_SESSION['id_status'] = $result->code;
         header('Location: ' . BASE_PATH . $redirect_url);
     }
+
 
     public function createUser($request, $requestFiles)
     {
@@ -71,22 +89,25 @@ class Controller
         ];
         
         $result = $this->userController->createUser($transformed_request);
-        
+
         session_start();
         $_SESSION["message"] = $result->message;
-        $_SESSION["id_status"] = $result->code;
+        $_SESSION["id_status"] = isset($result->code) ? $result->code : -1;
         
         unlink($imgTemp);
         header('Location: ' . BASE_PATH . $request->redirect_url);
     }
 
+
     public function deleteUser($request)
     {
         $result = $this->userController->deleteUser($request);
+
         session_start();
         $_SESSION['message'] = $result->message;
         $_SESSION['id_status'] = $result->code;
         header('Location: ' . BASE_PATH . $request->redirect_url);
+
     }
 }
 
@@ -103,7 +124,7 @@ if (isset($_POST['action'])) {
 
         // User
         case 'createUser': $controller->createUser($request, $_FILES); break;
-        case 'updateUser': $controller->updateUser($request, $_POST['redirect_url']); break;
+        case 'updateUser': $controller->updateUser($request, $_POST['redirect_url'],$_FILES); break;
         case 'deleteUser': $controller->deleteUser($request); break;
 
         default: echo 'Controlador no encontrado';
