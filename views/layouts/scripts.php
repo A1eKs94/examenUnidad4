@@ -30,3 +30,5 @@
 <script>
   preset_change('preset-1');
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
