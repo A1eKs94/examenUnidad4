@@ -149,6 +149,12 @@ class Controller
         $_SESSION["id_status"] = $result->code;
         header("Location: ". BASE_PATH . $request->redirect_url);
     }
+
+    public function widgetPurchases($request)
+    {
+        $result = $this->clientController->totalPurchases($request);
+        return $result;
+    }
 }
 
 $controller = new Controller();

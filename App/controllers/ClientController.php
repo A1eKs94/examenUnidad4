@@ -171,4 +171,31 @@ class ClientController
 
         return $response;
     }
+
+    public function totalPurchases($request)
+    {
+        $result = $this->get($request);
+
+        if($result->code === -1) return $result;
+
+        $orders = $result->data->orders;
+
+        $response = array();
+
+        $totalPurchases = 0;
+        $totalAmount = 0;
+
+        foreach ($orders as $order) {
+            $totalAmount += $order->total;
+            $totalPurchases++;
+        }
+
+        $object = (object)["totalPurchases" => $totalPurchases, "totalAmount" => $totalAmount];
+        
+        $response = $response[0] = $object;
+        
+        //var_dump($response);
+
+        return $response; // Retorna un arreglo
+    }
 }
