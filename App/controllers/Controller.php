@@ -8,11 +8,13 @@ class Controller
 {
     public $authController;
     public $userController;
+    public $clientController;
 
     public function __construct()
     {
         $this->authController = new AuthController();
         $this->userController = new UserController();
+        $this->clientController = new ClientController();
     }
 
     // Auth Controllers
@@ -109,21 +111,41 @@ class Controller
     // Client Controllers
     public function getClients($request)
     {
-        $result = $this->userController->index($request);  
+        $result = $this->clientController->index($request);  
         return $result;
     }
 
     public function getClient($request)
     {
-
+        $result = $this->clientController->get($request);
+        return $result;
     }
 
     public function createClient($request)
     {
-        $result = $this->userController->createUser($request);
+        $result = $this->clientController->create($request);
         session_start();
         $_SESSION["message"] = $result->message;
         $_SESSION["id_status"] = $result->code;
+        header("Location: ". BASE_PATH . $request->redirect_url);
+    }
+
+    public function updateClient($request)
+    {
+        $result = $this->clientController->update($request);
+        session_start();
+        $_SESSION["message"] = $result->message;
+        $_SESSION["id_status"] = $result->code;
+        header("". BASE_PATH . $request->redirect_url);
+    }
+
+    public function deleteClient($request)
+    {
+        $result = $this->clientController->delete($request);
+        session_start();
+        $_SESSION["message"] = $result->message;
+        $_SESSION["id_status"] = $result->code;
+        header("Location: ". BASE_PATH . $request->redirect_url);
     }
 }
 
@@ -142,6 +164,12 @@ if (isset($_POST['action'])) {
         case 'createUser': $controller->createUser($request, $_FILES); break;
         case 'updateUser': $controller->updateUser($request, $_POST['redirect_url'],$_FILES); break;
         case 'deleteUser': $controller->deleteUser($request); break;
+
+        // Client
+        case 'getClients': $controller->getClients($request); break;
+        case 'getClient': $controller->getClient($request); break;
+        case 'createClient': $controller->createClient($request); break;
+        case 'updateClient': $controller->updateClient($request); break;
 
         default: echo 'Controlador no encontrado';
     }
