@@ -48,13 +48,11 @@ class Controller
         return (object)["code" => -1, "message" => "No se encontraron usuarios"];
     }
 
-
     public function getUser($request)
     {
         $user_data = $this->userController->getUser($request);
         return $user_data;
     }
-
 
     public function updateUser($request, $redirect_url, $requestFiles)
     {
@@ -70,7 +68,6 @@ class Controller
         $_SESSION['id_status'] = $result->code;
         header('Location: ' . BASE_PATH . $redirect_url);
     }
-
 
     public function createUser($request, $requestFiles)
     {
@@ -98,7 +95,6 @@ class Controller
         header('Location: ' . BASE_PATH . $request->redirect_url);
     }
 
-
     public function deleteUser($request)
     {
         $result = $this->userController->deleteUser($request);
@@ -108,6 +104,26 @@ class Controller
         $_SESSION['id_status'] = $result->code;
         header('Location: ' . BASE_PATH . $request->redirect_url);
 
+    }
+
+    // Client Controllers
+    public function getClients($request)
+    {
+        $result = $this->userController->index($request);  
+        return $result;
+    }
+
+    public function getClient($request)
+    {
+
+    }
+
+    public function createClient($request)
+    {
+        $result = $this->userController->createUser($request);
+        session_start();
+        $_SESSION["message"] = $result->message;
+        $_SESSION["id_status"] = $result->code;
     }
 }
 
