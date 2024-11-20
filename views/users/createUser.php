@@ -68,7 +68,7 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
             <div class="row">
                 <!-- [ form-element ] start -->
                 <div class="col-lg-12">
-                    <form action="<?php echo BASE_PATH; ?>api" method="POST" enctype="multipart/form-data">
+                    <form id="createUser" action="<?php echo BASE_PATH; ?>api" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="action" value="createUser">
                             <input type="hidden" name="redirect_url" value="users/list/">
                             <input type="hidden" name="token" value="<?php echo  $token; ?>">
@@ -95,32 +95,28 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                                             <label class="form-label">Nombre</label>
                                             <input type="text" class="form-control" id="inputName" name="name" placeholder="Ingrese su nombre" required/>
                                         </div>
+
                                         <div class="mb-3">
-                                            <label class="form-label"   for="exampleInputEmail1">Correo electronico</label>
-                                            <input
-                                                type="email"
-                                                class="form-control"
-                                                name="email"
-                                                id="inputEmail"
-                                                aria-describedby="emailHelp"
-                                                placeholder="Ingrese su correo" />
+                                            <label class="form-label" for="exampleInputEmail1">Correo electronico</label>
+                                            <input type="email" class="form-control" name="email" id="inputEmail" aria-describedby="emailHelp" placeholder="Ingrese su correo"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label" >Apellido</label>
-                                            <input type="text" class="form-control"  id="inputLastName" name="lastname" placeholder="Ingrese su apellido"  />
+                                            <input type="text" class="form-control"  id="inputLastName" name="lastname" placeholder="Ingrese su apellido"/>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label" for="exampleInputPassword1">Contraseña</label>
-                                            <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Ingrese su contrasena" required />
+                                            <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Ingrese su contrasena" required/>
                                             <small id="passwordHelp" class="form-text text-muted">Nunca comparta su contraseña con nadie.</small>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">Numero de telefono</label>
-                                            <input type="text" class="form-control" id="inputPhoneNumber"  name="phone_number" placeholder="Text" required />
+                                            <input type="text" class="form-control" id="inputPhoneNumber" minlength="10" 
+                                            maxlength="10"  name="phone_number" placeholder="Text" required />
                                         </div>
                                     </div>
                                 </div>
@@ -154,6 +150,40 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
     <?php include_once __DIR__ . "/../../views/layouts/footer.php" ?>
     <!-- Required Js -->
     <?php include_once __DIR__ . "/../../views/layouts/scripts.php" ?>
+
+    <script>
+        const inputName = document.getElementById('inputName');
+
+        inputName.addEventListener('input', (event) => {
+            const value = event.target.value;
+            event.target.value = value.replace(/[^a-zA-ZñÑ\s]/g, '');
+        });
+
+        const inputLastName = document.getElementById('inputLastName');
+
+        inputLastName.addEventListener('input', (event) => {
+            const value = event.target.value;
+            event.target.value = value.replace(/[^a-zA-ZñÑ\s]/g, '');
+        });
+
+        const inputPhoneNumber = document.getElementById('inputPhoneNumber');
+
+        inputPhoneNumber.addEventListener('input', (event) => {
+            const value = event.target.value;
+            event.target.value = value.replace(/[^0-9]/g, '').slice(0, 10);;
+        });
+
+        const form = document.getElementById('createUser');
+
+        form.addEventListener('submit', (event) => {
+            const phoneNumber = inputPhoneNumber.value;
+
+            if (phoneNumber.length < 10) {
+                event.preventDefault();
+                alert('El número de teléfono debe contener exactamente 10 dígitos.');
+            }
+        });
+    </script>
 
     <script>
         function previewImage(event) {
