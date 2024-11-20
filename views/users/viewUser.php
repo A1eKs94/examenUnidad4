@@ -1,6 +1,32 @@
 <?php
-include_once __DIR__ .  "/../../config.php";
+include_once __DIR__ . '/../../config.php';
+
 session_start();
+
+if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
+        //$user_id = $_SESSION['profile']->data->id;  
+        $token = $_SESSION['token'];  
+        require_once "../../App/controllers/Controller.php";
+
+        if (isset($_GET['id'])) {
+            $user_id = $_GET['id'];
+            
+            $request = (object)[
+                'id' => $user_id,  
+                'token' => $token   
+            ];
+            $user_datas = $controller->getUser($request);
+
+
+            
+        } else {
+            echo "No se especificó el ID del usuario.";
+        }
+
+    } else {
+        echo "Error: El perfil del usuario no está disponible o no se encuentra en la sesión.";
+        exit;
+    }
 ?>
 <!doctype html>
 <html lang="en">
@@ -56,16 +82,16 @@ session_start();
                                 <div class="card-body position-relative">
                                     <div class="text-center mt-3">
                                         <div class="chat-avtar d-inline-flex mx-auto">
-                                            <img
-                                                class="rounded-circle img-fluid wid-90 img-thumbnail"
-                                                src="<?= BASE_PATH ?>assets/images/user-default.jpg"
-                                                alt="User image" />
+                                        <img class="rounded-circle img-fluid wid-90 img-thumbnail"
+                                            src="<?= ($user_datas->data->avatar === 'https://crud.jonathansoto.mx/storage/users/avatars/' || $user_datas->data->avatar === 'https://crud.jonathansoto.mx/storage/users/avatars/avantar.jpg') 
+                                                    ? BASE_PATH . 'assets/images/user-default.jpg' 
+                                                    : $user_datas->data->avatar ?>"
+                                            alt="User image" />
+                                            
                                         </div>
-                                        <!-- Aqui va el nombre de usuario -->
-                                        <h5 class="mb-0">William Bond</h5>
+                                        <h5 class="mb-0"><?php echo  $user_datas->data->name; ?></h5>
                                     </div>
                                 </div>
-                                <!-- Aqui va el menu de opciones -->
                                 <div
                                     class="nav flex-column nav-pills list-group list-group-flush account-pills mb-0"
                                     id="user-set-tab"
@@ -109,7 +135,7 @@ session_start();
                                                         <!-- Aqui va el nombre de usuario -->
                                                         <div class="col-md-6">
                                                             <p class="mb-1 text-muted">Nombre</p>
-                                                            <p class="mb-0">Anshan Handgun</p>
+                                                            <p class="mb-0"><?php echo  $user_datas->data->name; ?></p>
                                                         </div>
                                                         <!-- Aqui va el nivel que tiene el usuario 'vip, premiun o normal'-->
                                                         <div class="col-md-6">
@@ -123,7 +149,7 @@ session_start();
                                                         <!-- Aqui va el telefono del usuario -->
                                                         <div class="col-md-6">
                                                             <p class="mb-1 text-muted">Número de Teléfono</p>
-                                                            <p class="mb-0">(+1-876) 8654 239 581</p>
+                                                            <p class="mb-0"><?php echo  $user_datas->data->phone_number; ?></p>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -132,7 +158,7 @@ session_start();
                                                         <!-- Aqui va el correo del usuario -->
                                                         <div class="col-md-6">
                                                             <p class="mb-1 text-muted">Email</p>
-                                                            <p class="mb-0">anshan.dh81@gmail.com</p>
+                                                            <p class="mb-0"><?php echo  $user_datas->data->email; ?></p>
                                                         </div>
                                                     </div>
                                                 </li>

@@ -1,7 +1,24 @@
 <?php
 
-include_once __DIR__ . "/../../config.php";
+include_once __DIR__ . '/../../config.php';
 session_start();
+
+if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
+    $user_id = $_SESSION['profile']->data->id;
+    $token = $_SESSION['token'];
+    $created_by = $_SESSION['profile']->data->created_by;
+    require_once "../../App/controllers/Controller.php";
+
+   /*  $request = (object)[
+        'token' => $token
+    ];
+    $data_user = $controller->getUsers($request);
+ */
+    //var_dump($user_data); 
+} else {
+    echo "Error: error no hay token o id";
+    exit;
+}
 
 ?>
 <!doctype html>
@@ -23,10 +40,8 @@ session_start();
     </div>
     <!-- [ Pre-loader ] End -->
     <!-- [ Sidebar Menu ] start -->
-    <?php include_once __DIR__ .  "/../../views/layouts/sidebar.php" ?>
     <!-- [ Sidebar Menu ] end -->
     <!-- [ Header Topbar ] start -->
-    <?php include_once __DIR__ .  "/../../views/layouts/header.php" ?>
     <!-- [ Header ] end -->
 
 
@@ -53,76 +68,83 @@ session_start();
             <div class="row">
                 <!-- [ form-element ] start -->
                 <div class="col-lg-12">
-                    <div class="card">
-                        <div id="sticky-action" class="sticky-action">
-                            <div class="card-header">
-                                <div class="row align-items-center">
-                                    <div class="col-sm-6">
-                                        <h5>Ingrese los datos</h5>
-                                    </div>
-                                    <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
-                                        <button type="reset" class="btn btn-success">Crear</button>
-                                        <button type="reset" class="btn btn-light-secondary">Limpiar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Nombre</label>
-                                        <input type="text" class="form-control" placeholder="Ingrese su nombre" />
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="exampleInputEmail1">Correo electronico</label>
-                                        <input
-                                            type="email"
-                                            class="form-control"
-                                            id="exampleInputEmail1"
-                                            aria-describedby="emailHelp"
-                                            placeholder="Ingrese su correo" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Apellido</label>
-                                        <input type="text" class="form-control" placeholder="Ingrese su apellido" />
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="exampleInputPassword1">Contraseña</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Ingrese su contrasena" />
-                                        <small id="passwordHelp" class="form-text text-muted">Nunca comparta su contraseña con nadie.</small>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Numero de telefono</label>
-                                        <input type="text" class="form-control" placeholder="Text" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div>
-                                        <label class="form-label">Ingrese su imagen</label>
-                                        <label class="btn btn-outline-secondary w-100" for="flupld">
-                                            <i class="ti ti-upload me-2"></i>Cargar
-                                        </label>
-                                        <input type="file" id="flupld" class="d-none" name="cover" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 text-center">
-                                    <img src="../../assets/images/user-default.jpg" alt="Imagen de usuario" style="width: 300px; height: auto; object-fit: contain;" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <form action="<?php echo BASE_PATH; ?>api" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="action" value="createUser">
+                            <input type="hidden" name="redirect_url" value="users/list/">
+                            <input type="hidden" name="token" value="<?php echo  $token; ?>">
+                            <input type="hidden" name="created_by" value="<?php echo  $created_by; ?>">
 
+                        <div class="card">
+                            <div id="sticky-action" class="sticky-action">
+                                <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class="col-sm-6">
+                                            <h5>Ingrese los datos</h5>
+                                        </div>
+                                        <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+                                            <button type="submit" class="btn btn-success">Crear</button>
+                                            <button type="reset" onclick="vaciarCampos()" class="btn btn-light-secondary">Limpiar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Nombre</label>
+                                            <input type="text" class="form-control" id="inputName" name="name" placeholder="Ingrese su nombre" required/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label"   for="exampleInputEmail1">Correo electronico</label>
+                                            <input
+                                                type="email"
+                                                class="form-control"
+                                                name="email"
+                                                id="inputEmail"
+                                                aria-describedby="emailHelp"
+                                                placeholder="Ingrese su correo" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" >Apellido</label>
+                                            <input type="text" class="form-control"  id="inputLastName" name="lastname" placeholder="Ingrese su apellido"  />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="exampleInputPassword1">Contraseña</label>
+                                            <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Ingrese su contrasena" required />
+                                            <small id="passwordHelp" class="form-text text-muted">Nunca comparta su contraseña con nadie.</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Numero de telefono</label>
+                                            <input type="text" class="form-control" id="inputPhoneNumber"  name="phone_number" placeholder="Text" required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div>
+                                            <label class="form-label">Ingrese su imagen</label>
+                                            <label class="btn btn-outline-secondary w-100" for="flupld">
+                                                <i class="ti ti-upload me-2"></i>Cargar
+                                            </label>
+                                            <input type="file" id="flupld" class="d-none" name="profile_photo_file" onchange="previewImage(event)" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 text-center">
+                                        <img id="imagePreview" src="../../assets/images/user-default.jpg"  alt="Imagen de usuario" style="width: 300px; height: auto; object-fit: contain;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     <!-- [ form-element ] end -->
                 </div>
                 <!-- [ Main Content ] end -->
@@ -132,6 +154,30 @@ session_start();
     <?php include_once __DIR__ . "/../../views/layouts/footer.php" ?>
     <!-- Required Js -->
     <?php include_once __DIR__ . "/../../views/layouts/scripts.php" ?>
+
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader(); 
+            reader.onload = function() {
+                var output = document.getElementById('imagePreview');
+                output.src = reader.result; 
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function vaciarCampos() {
+
+            console.log("SADASds")
+            document.getElementById("inputName").value = '';
+            document.getElementById("inputEmail").value = '';
+            document.getElementById("inputPhoneNumber").value = '';
+            document.getElementById("inputPassword").value = '';
+            document.getElementById("inputLastName").value = '';
+            document.getElementById("imagePreview").src = '../../assets/images/user-default.jpg';
+
+            
+        }
+    </script>
 
 </body>
 <!-- [Body] end -->

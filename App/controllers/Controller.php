@@ -3,6 +3,8 @@
 require_once dirname(__DIR__, 2) . '/config.php';
 require_once "AuthController.php";
 require_once "UserController.php";
+require_once "ClientController.php";
+
 
 class Controller
 {
