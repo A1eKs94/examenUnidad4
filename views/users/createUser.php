@@ -31,6 +31,8 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
 <!-- [Head] end -->
 <!-- [Body] Start -->
 
+
+
 <body data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true" data-pc-direction="ltr" data-pc-theme="light">
     <!-- [ Pre-loader ] start -->
     <div class="loader-bg">
@@ -40,8 +42,11 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
     </div>
     <!-- [ Pre-loader ] End -->
     <!-- [ Sidebar Menu ] start -->
+    <?php include_once __DIR__ . '/../layouts/sidebar.php' ?>
     <!-- [ Sidebar Menu ] end -->
     <!-- [ Header Topbar ] start -->
+
+    <?php include_once __DIR__ . '/../layouts/header.php' ?>
     <!-- [ Header ] end -->
 
 
