@@ -112,14 +112,14 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                                         <div class="mb-3">
                                             <label class="form-label">Número de teléfono</label>
                                             <input
-                                                type="number"
+                                                type="text"
                                                 class="form-control"
                                                 id="inputPhoneNumber"
                                                 name="phone_number"
                                                 placeholder="Ingresa tu número de teléfono"
                                                 required
-                                                min="1000000000"
-                                                max="9999999999" />
+                                                min="10"
+                                                max="10" />
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label" for="exampleInputPassword1">Contraseña</label>
@@ -149,14 +149,12 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
             event.target.value = value.replace(/[^a-zA-ZñÑ\s]/g, '');
         });
 
-        const inputLastName = document.getElementById('inputLastName');
-
-        inputLastName.addEventListener('input', (event) => {
+        const inputPhoneNumber = document.getElementById('inputPhoneNumber');
+        inputPhoneNumber.addEventListener('input', (event) => {
             const value = event.target.value;
-            event.target.value = value.replace(/[^a-zA-ZñÑ\s]/g, '');
+            event.target.value = value.replace(/[^0-9]/g, '').slice(0, 10);;
         });
 
-        const inputPhoneNumber = document.getElementById('inputPhoneNumber');
         const form = document.getElementById('createClient');
 
         // Validar en el evento submit

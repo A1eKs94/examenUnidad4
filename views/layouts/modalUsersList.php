@@ -117,3 +117,44 @@
     }
 </script>
 
+<script>
+        const editUserName = document.getElementById('editUserName');
+
+        editUserName.addEventListener('input', (event) => {
+            const value = event.target.value;
+            event.target.value = value.replace(/[^a-zA-ZñÑ\s]/g, '');
+        });
+
+        const editLastName = document.getElementById('editLastName');
+
+        editLastName.addEventListener('input', (event) => {
+            const value = event.target.value;
+            event.target.value = value.replace(/[^a-zA-ZñÑ\s]/g, '');
+        });
+
+        const editUserPhone = document.getElementById('editUserPhone');
+
+        editUserPhone.addEventListener('input', (event) => {
+            const value = event.target.value;
+            event.target.value = value.replace(/[^0-9]/g, '').slice(0, 10);;
+        });
+
+        const form = document.getElementById('editUserForm');
+
+        form.addEventListener('submit', (event) => {
+            const phoneNumber = editUserPhone.value;
+
+            if (phoneNumber.length < 10) {
+                event.preventDefault();
+                // alert('El número de teléfono debe contener exactamente 10 dígitos.');
+
+                Swal.fire({
+                    icon: "warning",
+                    title: "Oops...",
+                    text: "El número de teléfono debe contener exactamente 10 dígitos.",
+                });
+
+            }
+        });
+    </script>
+

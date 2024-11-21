@@ -80,3 +80,37 @@
         });
     });
 </script>
+
+<script>
+        const editClientName = document.getElementById('editClientName');
+
+        editClientName.addEventListener('input', (event) => {
+            const value = event.target.value;
+            event.target.value = value.replace(/[^a-zA-ZñÑ\s]/g, '');
+        });
+
+        const editClientPhone = document.getElementById('editClientPhone');
+
+        editClientPhone.addEventListener('input', (event) => {
+            const value = event.target.value;
+            event.target.value = value.replace(/[^0-9]/g, '').slice(0, 10);;
+        });
+
+        const form = document.getElementById('editClientForm');
+
+        form.addEventListener('submit', (event) => {
+            const phoneNumber = editClientPhone.value;
+
+            if (phoneNumber.length < 10) {
+                event.preventDefault();
+                // alert('El número de teléfono debe contener exactamente 10 dígitos.');
+
+                Swal.fire({
+                    icon: "warning",
+                    title: "Oops...",
+                    text: "El número de teléfono debe contener exactamente 10 dígitos.",
+                });
+
+            }
+        });
+    </script>
