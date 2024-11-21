@@ -1,5 +1,6 @@
 Options +FollowSymLinks -MultiViews -Indexes
 RewriteEngine on
+RewriteBase /
 
 RewriteRule ^auth/?$ index.php
 RewriteRule ^profile/?$ views/account-profile.php
@@ -18,7 +19,11 @@ RewriteRule ^detalles/?$ views/products/details.php
 RewriteRule ^carrito/?$ views/products/shoppingCart.php
 RewriteRule ^editar-producto/?$ views/products/editProduct.php
 
-RewriteRule ^/home/crear-producto/?$ views/products/create.php
-RewriteRule ^/home/detalles/?$ views/products/details.php
+RewriteRule ^home/crear-producto/?$ views/products/create.php
+RewriteRule ^home/detalles/?$ views/products/details.php
+
+RewriteRule ^cupon/lista/?$ views/coupons/coupons.php
+RewriteRule ^cupon/crear-cupon/?$ views/coupons/createCoupon.php [L]
+
 
 RewriteRule ^api/?$ App/controllers/Controller.php
