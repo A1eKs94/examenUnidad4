@@ -90,7 +90,7 @@ session_start();
                                                 <a href="#"
                                                     class="btn btn-light-info btn-sm"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#editUserModal">
+                                                    data-bs-target="#editClientModal">
                                                     Editar
                                                 </a>
 
@@ -109,8 +109,7 @@ session_start();
             <!-- [ Main Content ] end -->
         </div>
     </section>
-
-    <?php include_once __DIR__ . "/../../views/layouts/modalUsersList.php" ?>
+    <?php include_once __DIR__ . "/../../views/layouts/modalClientList.php" ?>
     <!-- [ Main Content ] end -->
     <?php include_once __DIR__ . "/../../views/layouts/footer.php" ?>
     <!-- Required Js -->
