@@ -95,6 +95,14 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
             <span class="pc-mtext">Carrito de Compras</span>
           </a>
         </li>
+        <li class="pc-item">
+          <a href="<?= BASE_PATH ?>cupon/lista/" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-table"></i>
+            </span>
+            <span class="pc-mtext">Cupones</span>
+          </a>
+        </li>
     </div>
 
     <div class="card pc-user-card">
