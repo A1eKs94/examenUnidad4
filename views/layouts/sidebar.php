@@ -111,7 +111,7 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
             <span class="pc-mtext">Categorias</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
           <ul class="pc-submenu">
             <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>categorias/etiquetas/">Etiquetas</a></li>
-            <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>categorias/etiquetas/">Marcas</a></li>
+            <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>categorias/marcas/">Marcas</a></li>
           </ul>
         </li>
     </div>
