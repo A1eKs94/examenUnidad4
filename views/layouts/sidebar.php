@@ -103,6 +103,17 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
             <span class="pc-mtext">Cupones</span>
           </a>
         </li>
+        <li class="pc-item pc-hasmenu">
+          <a href="#!" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-identification-card"></i>
+            </span>
+            <span class="pc-mtext">Categorias</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
+          <ul class="pc-submenu">
+            <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>categorias/etiquetas/">Etiquetas</a></li>
+            <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>categorias/etiquetas/">Marcas</a></li>
+          </ul>
+        </li>
     </div>
 
     <div class="card pc-user-card">
