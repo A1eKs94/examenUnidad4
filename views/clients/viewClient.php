@@ -91,6 +91,16 @@ session_start();
                                         aria-selected="false">
                                         <span class="f-w-500"><i class="ph-duotone ph-notebook m-r-10"></i>Ordenes</span>
                                     </a>
+                                    <a
+                                        class="nav-link list-group-item list-group-item-action"
+                                        id="user-set-directions-tab"
+                                        data-bs-toggle="pill"
+                                        href="#user-set-directions"
+                                        role="tab"
+                                        aria-controls="user-set-directions"
+                                        aria-selected="false">
+                                        <span class="f-w-500"><i class="ph-duotone ph-notebook m-r-10"></i>Direcciónes Guardadas</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -198,12 +208,83 @@ session_start();
 
                                                     </div>
                                                 </li>
+
                                                 <!-- Aqui va el cupon aplicado -->
                                                 <li class="list-group-item px-0 pb-0">
                                                     <p class="mb-1 text-muted">Cupon aplicado</p>
                                                     <p class="mb-0">20% de descuento</p>
                                                 </li>
                                             </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="user-set-directions" role="tabpanel" aria-labelledby="user-set-orders-tab">
+                                    <div class="card">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <h4 class="mb-0">Direcciones Guardadas</h4>
+                                            <a class="btn btn-success" href="<?= BASE_PATH ?>clients/crear-direccion/">Añadir Dirección</a>
+
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item px-0 pt-0">
+                                                    <div class="row">
+                                                        <!-- Nombre -->
+                                                        <div class="col-md-6">
+                                                            <h4>Juanito Leon</h4>
+                                                            <!-- Teléfono -->
+                                                            <p class="mb-0">6120000000</p>
+                                                        </div>
+                                                        <!-- Cliente ID -->
+                                                        <div class="col-md-6">
+                                                            <p class="mb-1 text-muted">ID Cliente</p>
+                                                            <p class="mb-0">1</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item px-0">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <!-- Dirección -->
+                                                            <p class="mb-1 text-muted">Dirección</p>
+                                                            <p class="mb-0">16 de septiembre #123</p>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <!-- Dirección de facturación -->
+                                                            <p class="mb-1 text-muted">¿Es dirección de facturación?</p>
+                                                            <p class="mb-0">Sí</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item px-0">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <!-- Código Postal -->
+                                                            <p class="mb-1 text-muted">Código Postal</p>
+                                                            <p class="mb-0">23000</p>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <!-- Ciudad -->
+                                                            <p class="mb-1 text-muted">Ciudad</p>
+                                                            <p class="mb-0">La Paz</p>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <!-- Provincia -->
+                                                            <p class="mb-1 text-muted">Provincia</p>
+                                                            <p class="mb-0">Baja California Sur</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <!-- Botones -->
+                                            <div class="d-flex justify-content-end mt-3">
+                                                <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#editAddressModal">Editar</button>
+
+                                                <button class="btn btn-danger">Eliminar</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -220,6 +301,7 @@ session_start();
 
     <!-- [ Main Content ] end -->
 
+    <?php include_once __DIR__ . "/../clients/modalAddress.php" ?>
     <?php include_once __DIR__ . "/../layouts/footer.php" ?>
 
 

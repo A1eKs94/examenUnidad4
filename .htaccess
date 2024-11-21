@@ -13,6 +13,7 @@ RewriteRule ^users/ver/?$ views/users/viewUser.php
 RewriteRule ^clients/list/?$ views/clients/clientsList.php
 RewriteRule ^clients/crear/?$ views/clients/createClient.php
 RewriteRule ^clients/ver/?$ views/clients/viewClient.php
+RewriteRule ^clients/crear-direccion/?$ views/clients/createAddress.php
 
 RewriteRule ^crear-producto/?$ views/products/create.php
 RewriteRule ^detalles/?$ views/products/details.php
