@@ -69,6 +69,17 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
             <!-- [ breadcrumb ] end -->
 
             <div class="row">
+
+                <div id="deleteModal" class="modalEliminar" style="display: none;">
+                    <div class="modal-content-eliminar">
+                        <span class="close" onclick="closeDeleteModal()">&times;</span>
+                        <h2>Confirmar eliminación</h2>
+                        <p>¿Estás seguro de que deseas eliminar este usuario?</p>
+                        <button onclick="confirmDelete()">Sí, eliminar</button>
+                        <button onclick="closeDeleteModal()">Cancelar</button>
+                    </div>
+                </div>
+
                 <!-- [ basic-table ] start -->
                 <div class="col-xl-12">
                     <div class="card">
@@ -113,12 +124,13 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                                         echo "<td>";
                                         echo "<a href='" . BASE_PATH . "users/ver/?id=" . $user->id . "' class='btn btn-light-primary btn-sm'>Ver</a>";
                                         echo "<a href='#' class='btn btn-light-info btn-sm' data-bs-toggle='modal' data-bs-target='#editUserModal' data-id='" . $user->id . "' data-name='" . $user->name . "' data-lastname='" . $user->lastname . "' data-email='" . $user->email . "' data-phone='" . $user->phone_number . "' data-image='" . $user->avatar . "'>Editar</a>";
-                                        echo "<a href='#' class='btn btn-light-danger btn-sm' onclick='setUserIdToDelete(" . $user->id . ")'>Eliminar</a>";
+                                        echo "<a href='#' class='btn btn-light-danger btn-sm' onclick='openDeleteModal(" . $user->id . ")'>Eliminar</a>";
                                         echo "</td>";
                                         echo "</tr>";
                                     }
                                     ?>
-                                </tbody>
+                                </tbody>                                       
+
                             </table>
 
                             
@@ -140,22 +152,86 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
     <?php include_once __DIR__ . "/../../views/layouts/scripts.php" ?>
 
     <script>
-        function loadUserData(id, name, lastname, email, phone, level) {
+        var userIdToDelete = null; 
+
+        function loadUserData(id, name, email, phone, level) {
             document.getElementById('editUserId').value = id;
             document.getElementById('editUserName').value = name;
-            document.getElementById('editLastName').value = lastname;
             document.getElementById('editUserEmail').value = email;
             document.getElementById('editUserPhone').value = phone;
             document.getElementById('editUserLevel').value = level;
         }
 
 
-        function setUserIdToDelete(userId) {
-            document.getElementById('userIdToDelete').value = userId;
+        function openDeleteModal(userId) {
+            userIdToDelete = userId; 
+            document.getElementById('deleteModal').style.display = "block";
+        }
+
+        function closeDeleteModal() {
+         document.getElementById('deleteModal').style.display = "none"; 
+        }
+
+        function confirmDelete() {
+            document.getElementById('userIdToDelete').value = userIdToDelete;
             
             document.getElementById('deleteUserForm').submit();
+
+            closeDeleteModal();
         }
     </script>
+
+    <style>
+        .modalEliminar {
+        display: none; 
+        position: fixed;  
+        z-index: 1050; 
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0); 
+        background-color: rgba(0, 0, 0, 0.4); 
+        }
+
+        .modal-content-eliminar {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+        text-align: center;
+        position: relative;
+        }
+
+        .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+        }
+
+        button {
+        padding: 10px 20px;
+        margin: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        }
+
+        button:hover {
+        background-color: #f44336;
+        color: white;
+        }
+    </style>
 
 </body>
 <!-- [Body] end -->

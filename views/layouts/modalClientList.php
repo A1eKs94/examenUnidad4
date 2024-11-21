@@ -1,16 +1,17 @@
-<div class="modal fade" id="editClientModal" tabindex="-1" aria-labelledby="editClientModalLabel" aria-hidden="true">
+<div class="modal fade" id="editClientsModal" tabindex="-1" aria-labelledby="editClientModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editClientModalLabel">Editar Usuario</h5>
+                <h5 class="modal-title" id="editClientModalLabel">Editar Cliente</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editClientForm" action="<?php echo BASE_PATH; ?>api" method="POST" enctype="multipart/form-data">
+                <form id="editClientForm" action="<?php echo BASE_PATH; ?>api" method="POST">
                     <input type="hidden" name="action" value="updateClient">
-                    <input type="hidden" name="redirect_url" value="Clients/list/">
+                    <input type="hidden" name="redirect_url" value="clients/list/">
                     <input type="hidden" name="token" value="<?php echo  $token; ?>">
                     <input type="hidden" id="editClientId" name="id">
+                    <input type="hidden" id="levelId" name="level_id">
 
 
                     <!-- Campo de Nombre -->
@@ -19,11 +20,6 @@
                         <input type="text" class="form-control" id="editClientName" name="name" required>
                     </div>
 
-                    <!-- Campo de Apellido -->
-                    <div class="mb-3">
-                        <label for="editClientSurname" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" id="editLastName" name="lastname" required>
-                    </div>
 
                     <!-- Campo de Correo -->
                     <div class="mb-3">
@@ -53,3 +49,34 @@
         </div>
     </div>
 </div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#editClientsModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);  
+
+            var userId = button.data('id');
+            var userName = button.data('name');
+            var userEmail = button.data('email');
+            var userPhone = button.data('phone');
+            var levelId = button.data('level-id');
+
+
+            var modal = $(this);
+            modal.find('#editClientId').val(userId);  
+            modal.find('#editClientName').val(userName); 
+            modal.find('#editClientEmail').val(userEmail); 
+            modal.find('#editClientPhone').val(userPhone); 
+            modal.find('#levelId').val(levelId); 
+
+
+            modal.find('#flupld').val("");
+
+    
+        });
+    });
+</script>

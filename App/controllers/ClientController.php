@@ -101,7 +101,7 @@ class ClientController
         $data = array(
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
+           // 'password' => $request->password,
             'phone_number' => $request->phone_number,
             'is_suscribed' => '0',
             'level_id' => $request->level_id,

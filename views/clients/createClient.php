@@ -1,7 +1,24 @@
 <?php
 
-include_once __DIR__ . "/../../config.php";
+include_once __DIR__ . '/../../config.php';
 session_start();
+
+if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
+    $user_id = $_SESSION['profile']->data->id;
+    $token = $_SESSION['token'];
+    $created_by = $_SESSION['profile']->data->created_by;
+    require_once "../../App/controllers/Controller.php";
+
+   /*  $request = (object)[
+        'token' => $token
+    ];
+    $data_user = $controller->getUsers($request);
+ */
+    //var_dump($user_data); 
+} else {
+    echo "Error: error no hay token o id";
+    exit;
+}
 
 ?>
 <!doctype html>
@@ -30,7 +47,6 @@ session_start();
     <!-- [ Header ] end -->
 
 
-
     <!-- [ Main Content ] start -->
     <section class="pc-container">
         <div class="pc-content">
@@ -48,11 +64,17 @@ session_start();
             </div>
             <!-- [ breadcrumb ] end -->
 
-
             <!-- [ Main Content ] start -->
             <div class="row">
                 <!-- [ form-element ] start -->
                 <div class="col-lg-12">
+
+                <form action="<?php echo BASE_PATH; ?>api" method="POST">
+                            <input type="hidden" name="action" value="createClient">
+                            <input type="hidden" name="redirect_url" value="clients/list/">
+                            <input type="hidden" name="token" value="<?php echo  $token; ?>">
+                            <input type="hidden" name="created_by" value="<?php echo  $created_by; ?>">
+
                     <div class="card">
                         <div id="sticky-action" class="sticky-action">
                             <div class="card-header">
@@ -61,7 +83,7 @@ session_start();
                                         <h5>Ingrese los datos</h5>
                                     </div>
                                     <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
-                                        <button type="reset" class="btn btn-success">Crear</button>
+                                        <button type="submit" class="btn btn-success">Crear</button>
                                         <button type="reset" class="btn btn-light-secondary">Limpiar</button>
                                     </div>
                                 </div>
@@ -72,33 +94,35 @@ session_start();
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Nombre</label>
-                                        <input type="text" class="form-control" placeholder="Ingrese su nombre" />
+                                        <input type="text" class="form-control" id="inputName" name="name" placeholder="Ingrese su nombre" required />
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="exampleInputEmail1">Correo electronico</label>
                                         <input
                                             type="email"
                                             class="form-control"
-                                            id="exampleInputEmail1"
+                                            name="email"
+                                            id="inputEmail"
                                             aria-describedby="emailHelp"
-                                            placeholder="Ingrese su correo" />
+                                            placeholder="Ingrese su correo"
+                                            required />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Numero de telefono</label>
-                                        <input type="text" class="form-control" placeholder="Ingrese su telefono" />
+                                        <input type="number" class="form-control" name="phone_number" id="inputPhoneNumber" placeholder="Ingrese su telefono" required />
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="exampleInputPassword1">Contraseña</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Ingrese su contrasena" />
+                                        <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Ingrese su contrasena" required />
                                         <small id="passwordHelp" class="form-text text-muted">Nunca comparta su contraseña con nadie.</small>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                </form>
                     <!-- [ form-element ] end -->
                 </div>
                 <!-- [ Main Content ] end -->
@@ -113,3 +137,15 @@ session_start();
 <!-- [Body] end -->
 
 </html>
+
+<script>
+     function vaciarCampos() {
+
+        document.getElementById("inputName").value = '';
+        document.getElementById("inputEmail").value = '';
+        document.getElementById("inputPhoneNumber").value = '';
+        document.getElementById("inputPassword").value = '';
+
+
+        }
+</script>

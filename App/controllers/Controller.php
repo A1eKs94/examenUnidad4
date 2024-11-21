@@ -114,7 +114,16 @@ class Controller
     public function getClients($request)
     {
         $result = $this->clientController->index($request);  
-        return $result;
+        if (isset($result->data)) {
+            if (is_object($result->data)) {
+                return [$result->data]; 
+            }
+            if (is_array($result->data)) {
+                return $result->data;
+            }
+        }
+
+        return (object)["code" => -1, "message" => "No se encontraron usuarios"];
     }
 
     public function getClient($request)
@@ -138,7 +147,7 @@ class Controller
         session_start();
         $_SESSION["message"] = $result->message;
         $_SESSION["id_status"] = $result->code;
-        header("". BASE_PATH . $request->redirect_url);
+        header("Location: ". BASE_PATH . $request->redirect_url);
     }
 
     public function deleteClient($request)
@@ -178,6 +187,8 @@ if (isset($_POST['action'])) {
         case 'getClient': $controller->getClient($request); break;
         case 'createClient': $controller->createClient($request); break;
         case 'updateClient': $controller->updateClient($request); break;
+        case 'deleteClient': $controller->deleteClient($request); break;
+
 
         default: echo 'Controlador no encontrado';
     }
