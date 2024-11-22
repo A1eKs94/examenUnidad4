@@ -6,7 +6,6 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
   $token = $_SESSION['token'];
   require_once __DIR__ . "/../../App/controllers/Controller.php";
 
-
   /* <?php            
     echo '<pre>';
     print_r($_SESSION['profile']);
@@ -23,6 +22,16 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
   exit;
 }
 
+if (isset($_GET['logout'])) {
+  // Elimina las variables de sesión y destruye la sesión
+  session_unset();
+  session_destroy();
+
+  // Redirige al login o index
+  header('Location: /');
+  exit;
+}
+
 ?>
 <!-- [ Sidebar Menu ] start -->
 <nav class="pc-sidebar">
@@ -31,7 +40,7 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
       <a href="<?= BASE_PATH ?>home/" class="b-brand text-primary">
         <!-- ========   Change your logo from here   ============ -->
         <img src="https://i.ibb.co/cDp8K0y/avocad.png" alt="logo" class="logo" style="max-width: 175px; min-width: 100px; height: auto;" />
-        </a>
+      </a>
     </div>
     <div class="navbar-content">
       <ul class="pc-navbar">
@@ -42,16 +51,12 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
           <i class="ph-duotone ph-gauge"></i>
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="#" class="pc-link">
+          <a href="<?= BASE_PATH ?>dashboard/" class="pc-link">
             <span class="pc-micon">
               <i class="ph-duotone ph-gauge"></i>
             </span>
             <span class="pc-mtext">Dashboard</span>
           </a>
-        </li>
-        <li class="pc-item pc-caption">
-          <label>Widget</label>
-          <i class="ph-duotone ph-chart-pie"></i>
         </li>
 
         <li class="pc-item pc-hasmenu">
@@ -79,7 +84,7 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
         </li>
 
         <li class="pc-item">
-          <a href="<?= BASE_PATH ?>products/" class="pc-link">
+          <a href="<?= BASE_PATH ?>home/" class="pc-link">
             <span class="pc-micon">
               <i class="ph-duotone ph-projector-screen-chart"></i>
             </span>
@@ -89,19 +94,32 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
           </a>
         </li>
         <li class="pc-item">
-          <a href="../widget/w_data.html" class="pc-link">
+          <a href="<?= BASE_PATH ?>carrito/" class="pc-link">
             <span class="pc-micon">
-              <i class="ph-duotone ph-database"></i>
+              <i class="ph-duotone ph-shopping-cart"></i>
             </span>
-            <span class="pc-mtext">Data</span>
+            <span class="pc-mtext">Carrito de Compras</span>
           </a>
         </li>
         <li class="pc-item">
-          <a href="../widget/w_chart.html" class="pc-link">
+          <a href="<?= BASE_PATH ?>cupon/lista/" class="pc-link">
             <span class="pc-micon">
-              <i class="ph-duotone ph-chart-pie"></i>
+              <i class="ph-duotone ph-table"></i>
             </span>
-            <span class="pc-mtext">Chart</span></a>
+            <span class="pc-mtext">Cupones</span>
+          </a>
+        </li>
+        <li class="pc-item pc-hasmenu">
+          <a href="#!" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-identification-card"></i>
+            </span>
+            <span class="pc-mtext">Categorias</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
+          <ul class="pc-submenu">
+            <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>categorias/etiquetas/">Etiquetas</a></li>
+            <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>categorias/marcas/">Marcas</a></li>
+            <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>categorias/categorias/">Categorías</a></li>
+          </ul>
         </li>
     </div>
 
@@ -135,7 +153,7 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                     </a>
                   </li>
                   <li>
-                    <a class="pc-user-links" href="">
+                    <a class="pc-user-links" href="?logout=true">
                       <i class="ph-duotone ph-power"></i>
                       <span>Cerrar Sesión</span>
                     </a>

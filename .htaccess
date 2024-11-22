@@ -1,9 +1,11 @@
 Options +FollowSymLinks -MultiViews -Indexes
 RewriteEngine on
+# RewriteBase /
 
 RewriteRule ^auth/?$ index.php
 RewriteRule ^profile/?$ views/account-profile.php
 RewriteRule ^home/?$ views/home.php
+RewriteRule ^dashboard/?$ views/dashboard.php
 
 RewriteRule ^users/list/?$ views/users/usersList.php
 RewriteRule ^users/crear/?$ views/users/createUser.php
@@ -12,7 +14,22 @@ RewriteRule ^users/ver/?$ views/users/viewUser.php
 RewriteRule ^clients/list/?$ views/clients/clientsList.php
 RewriteRule ^clients/crear/?$ views/clients/createClient.php
 RewriteRule ^clients/ver/?$ views/clients/viewClient.php
+RewriteRule ^clients/crear-direccion/?$ views/clients/createAddress.php
 
-RewriteRule ^crear-producto/?$ views/create.php
-RewriteRule ^detalles/?$ views/details.php
+RewriteRule ^crear-producto/?$ views/products/create.php
+RewriteRule ^detalles/?$ views/products/details.php
+RewriteRule ^carrito/?$ views/products/shoppingCart.php
+RewriteRule ^editar-producto/?$ views/products/editProduct.php
+
+RewriteRule ^home/crear-producto/?$ views/products/create.php
+RewriteRule ^home/detalles/?$ views/products/details.php
+
+RewriteRule ^cupon/lista/?$ views/coupons/coupons.php
+RewriteRule ^cupon/crear-cupon/?$ views/coupons/createCoupon.php [L]
+
+RewriteRule ^categorias/etiquetas/?$ views/categories/tags/tagsList.php
+RewriteRule ^categorias/marcas/?$ views/categories/brands/brandList.php
+RewriteRule ^categorias/categorias/?$ views/categories/categories/categorieList.php
+
+
 RewriteRule ^api/?$ App/controllers/Controller.php

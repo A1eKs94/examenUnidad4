@@ -1,4 +1,6 @@
 <?php
+
+
 // include "../config.php";
 
 if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
@@ -20,6 +22,16 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
   $user_data = $controller->getUser($request);
 } else {
   echo "Error: El perfil del usuario no está disponible o no se encuentra en la sesión.";
+  exit;
+}
+
+if (isset($_GET['logout'])) {
+  // Elimina las variables de sesión y destruye la sesión
+  session_unset();
+  session_destroy();
+
+  // Redirige al login o index
+  header('Location: /');
   exit;
 }
 
@@ -77,6 +89,17 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
             </a>
           </div>
         </li>
+        <li class="dropdown pc-h-item">
+          <a
+            class="pc-head-link me-0"
+            data-bs-toggle="dropdown"
+            href="#"
+            role="button"
+            aria-haspopup="false"
+            aria-expanded="false">
+            <i class="ph-duotone ph-shopping-cart"></i>
+          </a>
+        </li>
         <li class="dropdown pc-h-item header-user-profile">
           <a
             class="pc-head-link dropdown-toggle arrow-none me-0"
@@ -107,18 +130,25 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                     </div>
                   </li>
                   <li class="list-group-item">
-                    <a href="#" class="dropdown-item">
+                    <a href="<?= BASE_PATH?>carrito/" class="dropdown-item">
+                      <span class="d-flex align-items-center">
+                        <i class="ph-duotone ph-shopping-cart"></i>
+                        <span class="pc-mtext">Carrito de Compras</span>
+                      </span>
+                    </a>
+                    <a href="<?= BASE_PATH ?>profile/" class="dropdown-item">
                       <span class="d-flex align-items-center">
                         <i class="ph-duotone ph-user-circle"></i>
                         <span>Perfil</span>
                       </span>
                     </a>
-                    <a href="#" class="dropdown-item">
+                    <a href="?logout=true" class="dropdown-item">
                       <span class="d-flex align-items-center">
                         <i class="ph-duotone ph-power"></i>
                         <span>Cerrar Sesión</span>
                       </span>
                     </a>
+
                   </li>
                 </ul>
               </div>
