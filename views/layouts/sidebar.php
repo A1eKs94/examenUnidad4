@@ -41,16 +41,12 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
           <i class="ph-duotone ph-gauge"></i>
         </li>
         <li class="pc-item pc-hasmenu">
-          <a href="#" class="pc-link">
+          <a href="<?= BASE_PATH ?>dashboard/" class="pc-link">
             <span class="pc-micon">
               <i class="ph-duotone ph-gauge"></i>
             </span>
             <span class="pc-mtext">Dashboard</span>
           </a>
-        </li>
-        <li class="pc-item pc-caption">
-          <label>Widget</label>
-          <i class="ph-duotone ph-chart-pie"></i>
         </li>
 
         <li class="pc-item pc-hasmenu">

@@ -5,6 +5,7 @@ RewriteBase /
 RewriteRule ^auth/?$ index.php
 RewriteRule ^profile/?$ views/account-profile.php
 RewriteRule ^home/?$ views/home.php
+RewriteRule ^dashboard/?$ views/dashboard.php
 
 RewriteRule ^users/list/?$ views/users/usersList.php
 RewriteRule ^users/crear/?$ views/users/createUser.php

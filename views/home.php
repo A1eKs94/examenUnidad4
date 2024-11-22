@@ -101,7 +101,7 @@ session_start();
                       <p class="card-text">Descripción</p>
                       <div class="d-flex">
                         <div class="flex-grow-1 ms-3">
-                          <a href="editar-producto/">
+                          <a href="<?= BASE_PATH ?>editar-producto/">
                             <button class="btn btn-light-warning">Editar</button>
                           </a>
                           <button class="btn btn-light-danger">Eliminar</button>
