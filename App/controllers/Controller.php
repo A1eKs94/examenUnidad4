@@ -8,6 +8,7 @@ require_once "ProductController.php";
 require_once "CategoryController.php";
 require_once "BrandController.php";
 require_once "OrderController.php";
+require_once "TagsController.php";
 
 
 class Controller
@@ -19,6 +20,7 @@ class Controller
     public $orderController;
     public $categoryController;
     public $brandController;
+    public $tagController;
 
 
     public function __construct()
@@ -30,6 +32,7 @@ class Controller
         $this->categoryController = new CategoryController();
         $this->brandController = new BrandController();
         $this->orderController = new OrderController();
+        $this->tagController = new TagsController();
     }
 
     // Auth Controllers
@@ -301,6 +304,47 @@ class Controller
         header('Location: ' . BASE_PATH . $request->redirect_url);
     }
 
+    // ============= Tags Controllers ============= //
+
+    public function getTags($request)
+    {
+        $result = $this->tagController->index($request);
+        return $result;
+    }
+
+    public function getTag($request)
+    {
+        $result = $this->tagController->get($request);
+        return $result;
+    }
+
+    public function createTag($request)
+    {
+        $result = $this->tagController->create($request);
+        session_start();
+        $_SESSION['message'] = $result->message;        
+        $_SESSION['id_status'] = $result->code;
+        header('Location: ' . BASE_PATH . $request->redirect_url);
+    }
+
+    public function updateTag($request)
+    {
+        $result = $this->tagController->update($request);
+        session_start();
+        $_SESSION['message'] = $result->message;        
+        $_SESSION['id_status'] = $result->code;
+        header('Location: ' . BASE_PATH . $request->redirect_url);
+    }
+
+    public function deleteTag($request)
+    {
+        $result = $this->tagController->delete($request);
+        session_start();
+        $_SESSION['message'] = $result->message;        
+        $_SESSION['id_status'] = $result->code;
+        header('Location: ' . BASE_PATH . $request->redirect_url);
+    }
+
     // ============= Orders Controllers ============= //
     public function getOrder($token, $id_user)
     {
@@ -391,6 +435,17 @@ if (isset($_POST['action'])) {
             break;
         case 'deleteBrand':
             $controller->deleteBrand($request);
+            break;
+
+            // Tag
+        case 'createTag':
+            $controller->createTag($request);
+            break;
+        case 'updateTag':
+            $controller->updateTag($request);
+            break;
+        case 'deleteTag':
+            $controller->deleteTag($request);
             break;
 
             // Order
