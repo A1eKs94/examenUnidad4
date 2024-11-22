@@ -6,7 +6,7 @@
                 <h5 class="modal-title" id="editTagModalLabel">Editar Etiqueta</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
-            <form action="<?= BASE_PATH ?>tags/edit/" method="POST">
+            <form action="<?= BASE_PATH ?>categorias/etiquetas/" method="POST">
                 <div class="modal-body">
                     <!-- Campo de ID (oculto) -->
                     <input type="hidden" id="editTagId" name="id">
@@ -37,6 +37,34 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#editTagModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);  
+
+            var tagId = button.data('id');
+            var tagName = button.data('name');
+            var tagDescription = button.data('description');
+            var tagSlug = button.data('slug');
+
+
+
+            var modal = $(this);
+            modal.find('#editId').val(tagId);  
+            modal.find('#editName').val(tagName); 
+            modal.find('#editDescription').val(tagDescription); 
+            modal.find('#editSlug').val(tagSlug); 
+
+
+            modal.find('#flupld').val("");
+
+    
+        });
+    });
+</script>
 
 <script>
     const editName = document.getElementById('editName');

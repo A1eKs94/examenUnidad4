@@ -37,6 +37,34 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#editCategorieModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);  
+
+            var categorieId = button.data('id');
+            var categorieName = button.data('name');
+            var categorieDescription = button.data('description');
+            var categorieSlug = button.data('slug');
+
+
+
+            var modal = $(this);
+            modal.find('#editCategorieId').val(categorieId);  
+            modal.find('#editName').val(categorieName); 
+            modal.find('#editDescription').val(categorieDescription); 
+            modal.find('#editSlug').val(categorieSlug); 
+
+
+            modal.find('#flupld').val("");
+
+    
+        });
+    });
+</script>
+
 <script>
     const editName = document.getElementById('editName');
 

@@ -37,6 +37,34 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#editBrandModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);  
+
+            var brandId = button.data('id');
+            var brandName = button.data('name');
+            var brandDescription = button.data('description');
+            var brandSlug = button.data('slug');
+
+
+
+            var modal = $(this);
+            modal.find('#editBrandId').val(brandId);  
+            modal.find('#editName').val(brandName); 
+            modal.find('#editDescription').val(brandDescription); 
+            modal.find('#editSlug').val(brandSlug); 
+
+
+            modal.find('#flupld').val("");
+
+    
+        });
+    });
+</script>
+
 <script>
     const editName = document.getElementById('editName');
 
