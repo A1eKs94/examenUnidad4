@@ -26,11 +26,11 @@ class BrandController
 
         $response = json_decode($response);
 
-        if (isset($request->code) && !$request->code === 4) {
+        if (isset($response->code) && !$response->code === 4) {
             return (object)["code" => -1, "message" => "Error inesperado"];
         }
 
-        return $response;
+        return $response -> data ?? [];
     }
 
     public function get($request)
@@ -57,7 +57,7 @@ class BrandController
 
         $response = json_decode($response);
 
-        if (isset($request->code) && !$request->code === 4) {
+        if (isset($response->code) && !$response->code === 4) {
             return (object)["code" => -1, "message" => "Error inesperado"];
         }
 
@@ -89,7 +89,7 @@ class BrandController
 
         $response = json_decode($response);
 
-        if (isset($request->code) && !$request->code === 4) {
+        if (isset($response->code) && !$response->code === 4) {
             return (object)['code' => -1, 'message' => 'Error inesperado'];
         }
 
@@ -129,7 +129,7 @@ class BrandController
 
         $response = json_decode($response);
 
-        if (isset($request->code) && !$request->code === 4) {
+        if (isset($response->code) && !$response->code === 4) {
             return (object)['code' => -1, 'message' => 'Error inesperado'];
         }
 
@@ -160,7 +160,7 @@ class BrandController
 
         $response = json_decode($response);
 
-        if (isset($request->code) && !$request->code === 4) {
+        if (isset($response->code) && !$response->code === 4) {
             return (object)["code" => -1, "message" => "Error inesperado"];
         }
 
