@@ -70,3 +70,43 @@
         </div>
     </div>
 </div>
+
+<script>
+    const couponName = document.getElementById('couponName');
+
+    couponName.addEventListener('input', (event) => {
+        const value = event.target.value;
+        event.target.value = value.replace(/[^a-zA-ZñÑ0-9\s%]/g, '').slice(0, 50);
+    });
+
+    const couponCode = document.getElementById('couponCode');
+
+    couponCode.addEventListener('input', (event) => {
+        const value = event.target.value;
+        event.target.value = value.replace(/[^a-zA-Zñ��0-9\s%]/g, '').slice(0, 20);
+    });
+
+    const discount = document.getElementById('discount');
+
+    discount.addEventListener('input', (event) => {
+        const value = event.target.value;
+
+        event.target.value = Math.min(Math.max(value, 0), 100);
+    });
+
+    const minAmount = document.getElementById('minAmount');
+
+    minAmount.addEventListener('input', (event) => {
+        const value = event.target.value;
+
+        event.target.value = Math.min(Math.max(value, 0), 1000000);
+    });
+
+    const minProducts = document.getElementById('minProducts');
+
+    minProducts.addEventListener('input', (event) => {
+        const value = event.target.value;
+
+        event.target.value = Math.min(Math.max(value, 1), 1000);
+    });
+</script>
