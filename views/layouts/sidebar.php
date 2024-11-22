@@ -22,6 +22,16 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
   exit;
 }
 
+if (isset($_GET['logout'])) {
+  // Elimina las variables de sesión y destruye la sesión
+  session_unset();
+  session_destroy();
+
+  // Redirige al login o index
+  header('Location: /');
+  exit;
+}
+
 ?>
 <!-- [ Sidebar Menu ] start -->
 <nav class="pc-sidebar">
@@ -74,7 +84,7 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
         </li>
 
         <li class="pc-item">
-          <a href="<?= BASE_PATH ?>products/" class="pc-link">
+          <a href="<?= BASE_PATH ?>home/" class="pc-link">
             <span class="pc-micon">
               <i class="ph-duotone ph-projector-screen-chart"></i>
             </span>
@@ -143,7 +153,7 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                     </a>
                   </li>
                   <li>
-                    <a class="pc-user-links" href="">
+                    <a class="pc-user-links" href="?logout=true">
                       <i class="ph-duotone ph-power"></i>
                       <span>Cerrar Sesión</span>
                     </a>

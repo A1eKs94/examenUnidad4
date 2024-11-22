@@ -25,6 +25,16 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
   exit;
 }
 
+if (isset($_GET['logout'])) {
+  // Elimina las variables de sesión y destruye la sesión
+  session_unset();
+  session_destroy();
+
+  // Redirige al login o index
+  header('Location: /');
+  exit;
+}
+
 ?>
 
 <header class="pc-header">
@@ -120,24 +130,25 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                     </div>
                   </li>
                   <li class="list-group-item">
-                    <a href="#" class="dropdown-item">
+                    <a href="<?= BASE_PATH?>carrito/" class="dropdown-item">
                       <span class="d-flex align-items-center">
                         <i class="ph-duotone ph-shopping-cart"></i>
                         <span class="pc-mtext">Carrito de Compras</span>
                       </span>
                     </a>
-                    <a href="#" class="dropdown-item">
+                    <a href="<?= BASE_PATH ?>profile/" class="dropdown-item">
                       <span class="d-flex align-items-center">
                         <i class="ph-duotone ph-user-circle"></i>
                         <span>Perfil</span>
                       </span>
                     </a>
-                    <a href="#" class="dropdown-item">
+                    <a href="?logout=true" class="dropdown-item">
                       <span class="d-flex align-items-center">
                         <i class="ph-duotone ph-power"></i>
                         <span>Cerrar Sesión</span>
                       </span>
                     </a>
+
                   </li>
                 </ul>
               </div>
