@@ -13,6 +13,7 @@ class Controller
     public $userController;
     public $clientController;
     public $productController;
+    public $orderController;
 
 
     public function __construct()
@@ -21,6 +22,7 @@ class Controller
         $this->userController = new UserController();
         $this->clientController = new ClientController();
         $this->productController = new ProductController();
+        $this->orderController = new OrderController();
     }
 
     // Auth Controllers
@@ -209,6 +211,23 @@ class Controller
         $_SESSION['id_status'] = $result->code;
         header('Location: ' . BASE_PATH . $request->redirect_url);
     }
+
+    // Orders Controllers //
+    public function getOrder($token, $id_user)
+    {
+      
+        $orders_data = $this->orderController->get($token, $id_user);  
+        if (isset($orders_data->data)) {
+            if (is_object($orders_data->data)) {
+                return [$orders_data->data]; 
+            }
+            if (is_array($orders_data->data)) {
+                return $orders_data->data;
+            }
+        }
+
+        return (object)["code" => -1, "message" => "No se encontraron ordenes"];
+    }
 }
 
 $controller = new Controller();
@@ -262,6 +281,8 @@ if (isset($_POST['action'])) {
         case 'deleteProduct':
             $controller->deleteProduct($request);
             break;
+
+            // Order
 
         default:
             echo 'Controlador no encontrado';
