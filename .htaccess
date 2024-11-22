@@ -5,6 +5,7 @@ RewriteBase /
 RewriteRule ^auth/?$ index.php
 RewriteRule ^profile/?$ views/account-profile.php
 RewriteRule ^home/?$ views/home.php
+RewriteRule ^dashboard/?$ views/dashboard.php
 
 RewriteRule ^users/list/?$ views/users/usersList.php
 RewriteRule ^users/crear/?$ views/users/createUser.php
@@ -28,6 +29,7 @@ RewriteRule ^cupon/crear-cupon/?$ views/coupons/createCoupon.php [L]
 
 RewriteRule ^categorias/etiquetas/?$ views/categories/tags/tagsList.php
 RewriteRule ^categorias/marcas/?$ views/categories/brands/brandList.php
+RewriteRule ^categorias/categorias/?$ views/categories/categories/categorieList.php
 
 
 RewriteRule ^api/?$ App/controllers/Controller.php
