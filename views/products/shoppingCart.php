@@ -1,4 +1,8 @@
-<?php include_once __DIR__ . "../../../config.php"; ?>
+<?php 
+include_once __DIR__ . "../../../config.php"; 
+
+session_start();
+?>
 <!doctype html>
 <html lang="en">
 <!-- [Head] start -->

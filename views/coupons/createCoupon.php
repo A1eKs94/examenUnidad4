@@ -66,7 +66,7 @@ session_start();
                                 </div>
                                 <div class="mb-3">
                                     <label for="max_uses" class="form-label">Usos máximos:</label>
-                                    <input type="number" id="max_uses" name="max_uses" class="form-control" min="0">
+                                    <input type="number" id="max_uses" name="max_uses" class="form-control" min="1">
                                 </div>
                                 <div class="form-check mb-3">
                                     <input type="checkbox" class="form-check-input" id="status" name="status" checked>
@@ -89,6 +89,46 @@ session_start();
 
     <?php include_once __DIR__ .  "/../layouts/footer.php" ?>
     <?php include_once __DIR__ . "/../layouts/scripts.php" ?>
+
+    <script>
+    const name = document.getElementById('name');
+
+    name.addEventListener('input', (event) => {
+        const value = event.target.value;
+        event.target.value = value.replace(/[^a-zA-ZñÑ0-9\s%]/g, '').slice(0, 50);
+    });
+
+    const code = document.getElementById('code');
+
+    code.addEventListener('input', (event) => {
+        const value = event.target.value;
+        event.target.value = value.replace(/[^a-zA-Zñ��0-9\s%]/g, '').slice(0, 20);
+    });
+
+    const percentage_discount = document.getElementById('percentage_discount');
+
+    percentage_discount.addEventListener('input', (event) => {
+        const value = event.target.value;
+
+        event.target.value = Math.min(Math.max(value, 0), 100);
+    });
+
+    const min_amount_required = document.getElementById('min_amount_required');
+
+    min_amount_required.addEventListener('input', (event) => {
+        const value = event.target.value;
+
+        event.target.value = Math.min(Math.max(value, 0), 1000000);
+    });
+
+    const max_uses = document.getElementById('max_uses');
+
+    max_uses.addEventListener('input', (event) => {
+        const value = event.target.value;
+
+        event.target.value = Math.min(Math.max(value, 1), 10);
+    });
+</script>
 
 </body>
 <!-- [Body] end -->
