@@ -192,9 +192,22 @@ class Controller
         header('Location: ' . BASE_PATH . $request->redirect_url);
     }
 
-    public function updateProduct($request, $files)
+    public function updateProduct($request)
     {
-        
+        $result = $this->productController->update($request);
+        session_start();
+        $_SESSION['message'] = $result->message;
+        $_SESSION['id_status'] = $result->code;
+        header('Location: ' . BASE_PATH . $request->redirect_url); 
+    }
+
+    public function deleteProduct($request)
+    {
+        $result = $this->productController->delete($request);
+        session_start();
+        $_SESSION['message'] = $result->message;
+        $_SESSION['id_status'] = $result->code;
+        header('Location: ' . BASE_PATH . $request->redirect_url);
     }
 }
 
@@ -242,6 +255,12 @@ if (isset($_POST['action'])) {
             // Product
         case 'createProduct':
             $controller->createProduct($request, $_FILES);
+            break;
+        case 'updateProduct':
+            $controller->updateProduct($request);
+            break;
+        case 'deleteProduct':
+            $controller->deleteProduct($request);
             break;
 
         default:
