@@ -9,6 +9,7 @@ require_once "CategoryController.php";
 require_once "BrandController.php";
 require_once "OrderController.php";
 require_once "TagsController.php";
+require_once "CouponController.php";
 
 
 class Controller
@@ -21,6 +22,7 @@ class Controller
     public $categoryController;
     public $brandController;
     public $tagController;
+    public $couponController;
 
 
     public function __construct()
@@ -33,6 +35,7 @@ class Controller
         $this->brandController = new BrandController();
         $this->orderController = new OrderController();
         $this->tagController = new TagsController();
+        $this->couponController = new CouponController();
     }
 
     // Auth Controllers
@@ -345,6 +348,47 @@ class Controller
         header('Location: ' . BASE_PATH . $request->redirect_url);
     }
 
+    // ============= Coupons Controllers ============= //
+
+    public function getCoupons($request)
+    {
+        $result = $this->couponController->index($request);
+        return $result;
+    }
+
+    public function getCoupon($request)
+    {
+        $result = $this->couponController->get($request);
+        return $result;
+    }
+
+    public function createCoupon($request)
+    {
+        $result = $this->couponController->create($request);
+        session_start();
+        $_SESSION['message'] = $result->message;        
+        $_SESSION['id_status'] = $result->code;
+        header('Location: ' . BASE_PATH . $request->redirect_url);
+    }
+
+    public function updateCoupon($request)
+    {
+        $result = $this->couponController->update($request);
+        session_start();
+        $_SESSION['message'] = $result->message;        
+        $_SESSION['id_status'] = $result->code;
+        header('Location: ' . BASE_PATH . $request->redirect_url);
+    }
+
+    public function deleteCoupon($request)
+    {
+        $result = $this->couponController->delete($request);
+        session_start();
+        $_SESSION['message'] = $result->message;        
+        $_SESSION['id_status'] = $result->code;
+        header('Location: ' . BASE_PATH . $request->redirect_url);
+    }
+
     // ============= Orders Controllers ============= //
     public function getOrder($token, $id_user)
     {
@@ -446,6 +490,17 @@ if (isset($_POST['action'])) {
             break;
         case 'deleteTag':
             $controller->deleteTag($request);
+            break;
+
+            // Coupon
+        case 'createCoupon':
+            $controller->createCoupon($request);
+            break;
+        case 'updateCoupon':
+            $controller->updateCoupon($request);
+            break;
+        case 'deleteCoupon':
+            $controller->deleteCoupon($request);
             break;
 
             // Order
