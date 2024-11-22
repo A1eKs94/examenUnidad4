@@ -62,6 +62,15 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
             <!-- [ breadcrumb ] end -->
 
             <div class="row">
+                <div id="deleteModal" class="modalEliminar" style="display: none;">
+                    <div class="modal-content-eliminar">
+                        <span class="close" onclick="closeDeleteModal()">&times;</span>
+                        <h2>Confirmar eliminación</h2>
+                        <p>¿Estás seguro de que deseas eliminar este cliente?</p>
+                        <button onclick="confirmDelete()">Sí, eliminar</button>
+                        <button onclick="closeDeleteModal()">Cancelar</button>
+                    </div>
+                </div>
                 <!-- [ basic-table ] start -->
                 <div class="col-xl-12">
                     <div class="card">
@@ -74,6 +83,14 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                         </div>
                         <div class="card-body table-border-style">
                             <div class="table-responsive">
+
+                                <form id="deleteTagForm" action="<?php echo BASE_PATH; ?>api" method="POST" style="display: none;">
+                                    <input type="hidden" name="action" value="deleteTag">
+                                    <input type="hidden" name="redirect_url" value="categorias/etiquetas/">
+                                    <input type="hidden" name="token" value="<?php echo $token; ?>">
+                                    <input type="hidden" name="id" id="tagIdToDelete">
+                                </form>
+
                                 <table class="table" id="pc-dt-simple">
                                     <thead>
                                         <tr>
@@ -84,7 +101,7 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php 
+                                        <?php
                                         foreach ($data_tag as $tag) {
                                             // Validar que cada elemento sea un objeto y tenga las propiedades esperadas
                                             $name = isset($tag->name) ? htmlspecialchars($tag->name) : 'N/A';
@@ -123,6 +140,88 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
     <?php include_once __DIR__ . "/../../layouts/footer.php" ?>
     <!-- Required Js -->
     <?php include_once __DIR__ . "/../../layouts/scripts.php" ?>
+
+    <script>
+        var tagIdToDelete = null;
+
+        function loadTagData(id, name, description, slug) {
+            document.getElementById('editTagId').value = id;
+            document.getElementById('editName').value = name;
+            document.getElementById('editDescription').value = description;
+            document.getElementById('editSlug').value = slug;
+        }
+
+
+        function openDeleteModal(userId) {
+            tagIdToDelete = userId;
+            document.getElementById('deleteModal').style.display = "block";
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').style.display = "none";
+        }
+
+        function confirmDelete() {
+            document.getElementById('tagIdToDelete').value = tagIdToDelete;
+
+            document.getElementById('deleteTagForm').submit();
+
+            closeDeleteModal();
+        }
+    </script>
+
+
+    <style>
+        .modalEliminar {
+            display: none;
+            position: fixed;
+            z-index: 1050;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content-eliminar {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
 </body>
 <!-- [Body] end -->
 

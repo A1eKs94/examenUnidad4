@@ -90,84 +90,54 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                         </div>
                         <div class="card-body table-border-style">
                             <div class="table-responsive">
-                                <table class="table" id="pc-dt-simple">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Nombre</th>
-                                            <th>Correo</th>
-                                            <th>Teléfono</th>
-                                            <th>Nivel</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <!-- Aquí va el id -->
-                                            <td>1</td>
-                                            <!-- Aquí va el nombre -->
-                                            <td>Sergio</td>
-                                            <!-- Aquí va el correo -->
-                                            <td>sergio@gmail.com</td>
-                                            <!-- Aquí va el teléfono -->
-                                            <td>123456</td>
-                                            <!-- Aquí va el nivel -->
-                                            <td>VIP</td>
-                                            <!-- Botones de acciones -->
-                                            <td>
-                                                <a href="<?= BASE_PATH ?>clients/ver/" class="btn btn-light-primary btn-sm">Ver</a>
-                                                <a href="#"
-                                                    class="btn btn-light-info btn-sm"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#editClientModal">
-                                                    Editar
-                                                </a>
-                                                <input type="hidden" name="id" value="<?php echo  $user_id; ?>">
-
-                                                <div class="table-responsive">
-
-                                                    <form id="deleteClientForm" action="<?php echo BASE_PATH; ?>api" method="POST" style="display: none;">
-                                                        <input type="hidden" name="action" value="deleteClient">
-                                                        <input type="hidden" name="redirect_url" value="clients/list/">
-                                                        <input type="hidden" name="token" value="<?php echo $token; ?>">
-                                                        <input type="hidden" name="id" id="clientIdToDelete">
-                                                    </form>
 
 
-                                                    <table class="table" id="pc-dt-simple">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>ID</th>
-                                                                <th>Nombre</th>
-                                                                <th>Correo</th>
-                                                                <th>Teléfono</th>
-                                                                <th>Nivel</th>
-                                                                <th></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php
-                                                            foreach ($data_client as $client) {
-                                                                echo "<tr>";
-                                                                echo "<td>" . htmlspecialchars($client->id) . "</td>";
-                                                                echo "<td>" . htmlspecialchars($client->name) . "</td>";
-                                                                echo "<td>" . htmlspecialchars($client->email) . "</td>";
-                                                                echo "<td>" . (isset($client->phone_number) ? htmlspecialchars($client->phone_number) : 'No disponible') . "</td>";
-                                                                /*   echo "<td>" . htmlspecialchars($client->role) . "</td>"; */
+                                <input type="hidden" name="id" value="<?php echo  $user_id; ?>">
 
-                                                                echo "<td>";
-                                                                echo "<a href='" . BASE_PATH . "clients/ver/?id=" . $client->id . "' class='btn btn-light-primary btn-sm'>Ver</a>";
-                                                                echo "<a href='#' class='btn btn-light-info btn-sm' data-bs-toggle='modal' data-bs-target='#editClientsModal' data-id='" . $client->id . "' data-name='" . $client->name . "' data-email='" . $client->email . "' data-phone='" . $client->phone_number . "' data-level-id='" . $client->level_id . "'>Editar</a>";
-                                                                echo "<a href='#' class='btn btn-light-danger btn-sm' onclick='openDeleteModal(" . $client->id . ")'>Eliminar</a>";
-                                                                echo "</td>";
-                                                                echo "</tr>";
-                                                            }
-                                                            ?>
-                                                        </tbody>
-                                                    </table>
+                                <div class="table-responsive">
+
+                                    <form id="deleteClientForm" action="<?php echo BASE_PATH; ?>api" method="POST" style="display: none;">
+                                        <input type="hidden" name="action" value="deleteClient">
+                                        <input type="hidden" name="redirect_url" value="clients/list/">
+                                        <input type="hidden" name="token" value="<?php echo $token; ?>">
+                                        <input type="hidden" name="id" id="clientIdToDelete">
+                                    </form>
 
 
-                                                </div>
+                                    <table class="table" id="pc-dt-simple">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Nombre</th>
+                                                <th>Correo</th>
+                                                <th>Teléfono</th>
+                                                <th>Nivel</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            foreach ($data_client as $client) {
+                                                echo "<tr>";
+                                                echo "<td>" . htmlspecialchars($client->id) . "</td>";
+                                                echo "<td>" . htmlspecialchars($client->name) . "</td>";
+                                                echo "<td>" . htmlspecialchars($client->email) . "</td>";
+                                                echo "<td>" . (isset($client->phone_number) ? htmlspecialchars($client->phone_number) : 'No disponible') . "</td>";
+                                                /*   echo "<td>" . htmlspecialchars($client->role) . "</td>"; */
+
+                                                echo "<td>";
+                                                echo "<a href='" . BASE_PATH . "clients/ver/?id=" . $client->id . "' class='btn btn-light-primary btn-sm'>Ver</a>";
+                                                echo "<a href='#' class='btn btn-light-info btn-sm' data-bs-toggle='modal' data-bs-target='#editClientsModal' data-id='" . $client->id . "' data-name='" . $client->name . "' data-email='" . $client->email . "' data-phone='" . $client->phone_number . "' data-level-id='" . $client->level_id . "'>Editar</a>";
+                                                echo "<a href='#' class='btn btn-light-danger btn-sm' onclick='openDeleteModal(" . $client->id . ")'>Eliminar</a>";
+                                                echo "</td>";
+                                                echo "</tr>";
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
                             </div>
                         </div>
                     </div>
