@@ -24,7 +24,7 @@ class BrandController
 
         curl_close($curl);
 
-        $request = json_decode($response);
+        $response = json_decode($response);
 
         if (isset($request->code) && !$request->code === 4) {
             return (object)["code" => -1, "message" => "Error inesperado"];
@@ -55,7 +55,7 @@ class BrandController
 
         curl_close($curl);
 
-        $request = json_decode($response);
+        $response = json_decode($response);
 
         if (isset($request->code) && !$request->code === 4) {
             return (object)["code" => -1, "message" => "Error inesperado"];
@@ -87,7 +87,7 @@ class BrandController
 
         curl_close($curl);
 
-        $request = json_decode($response);
+        $response = json_decode($response);
 
         if (isset($request->code) && !$request->code === 4) {
             return (object)['code' => -1, 'message' => 'Error inesperado'];
@@ -127,7 +127,7 @@ class BrandController
 
         curl_close($curl);
 
-        $request = json_decode($response);
+        $response = json_decode($response);
 
         if (isset($request->code) && !$request->code === 4) {
             return (object)['code' => -1, 'message' => 'Error inesperado'];
@@ -158,7 +158,7 @@ class BrandController
 
         curl_close($curl);
 
-        $request = json_decode($response);
+        $response = json_decode($response);
 
         if (isset($request->code) && !$request->code === 4) {
             return (object)["code" => -1, "message" => "Error inesperado"];
