@@ -7,6 +7,7 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
         //$user_id = $_SESSION['profile']->data->id;  
         $token = $_SESSION['token'];  
         require_once "../../App/controllers/Controller.php";
+        require_once "../../App/controllers/OrderController.php";
 
         if (isset($_GET['id'])) {
             $user_id = $_GET['id'];
@@ -16,9 +17,21 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                 'token' => $token   
             ];
             $user_datas = $controller->getUser($request);
+            $id_user = $user_datas->data->id;
+            $orders = $controller->getOrder($token,$id_user);
+              /*  var_dump($orders);
+            exit();     */
+            $hayOrdenes = true;  
+         
+            if(is_object($orders)){
+                if ($orders->message == "No se encontraron ordenes" || $orders->code == -1) {
+                    $hayOrdenes = false; 
+                }
+            }else{
+                $presentations = $orders[0]->presentations;
+            }
+           
 
-
-            
         } else {
             echo "No se especificó el ID del usuario.";
         }
@@ -83,12 +96,10 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                                     <div class="text-center mt-3">
                                         <div class="chat-avtar d-inline-flex mx-auto">
                                         <img class="rounded-circle img-fluid wid-90 img-thumbnail"
-                                            src="<?= ($user_datas->data->avatar === 'https://crud.jonathansoto.mx/storage/users/avatars/' || $user_datas->data->avatar === 'https://crud.jonathansoto.mx/storage/users/avatars/avantar.jpg') 
-                                                    ? BASE_PATH . 'assets/images/user-default.jpg' 
-                                                    : $user_datas->data->avatar ?>"
+                                            src="<?= isValidImage($user_datas->data->avatar) 
+                                                    ? $user_datas->data->avatar 
+                                                    : BASE_PATH . 'assets/images/user-default.jpg' ?>"
                                             alt="User image" />
-                                            
-                                        </div>
                                         <h5 class="mb-0"><?php echo  $user_datas->data->name; ?></h5>
                                     </div>
                                 </div>
@@ -174,66 +185,93 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                                         </div>
 
                                     </div>
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item px-0 pt-0">
-                                                    <div class="row">
-                                                        <!-- Aqui va el nombre del producto -->
-                                                        <div class="col-md-6">
-                                                            <h4>Lavadora</h4>
-                                                            <!-- Aqui el precio del producto -->
-                                                            <p class="mb-0">$21441</p>
-                                                        </div>
-                                                        <!-- Aqui va el folio de la orden'-->
-                                                        <div class="col-md-6">
-                                                            <p class="mb-1 text-muted">Folio</p>
-                                                            <p class="mb-0">123456</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item px-0">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <!-- Aqui va el tipo de pago -->
-                                                            <p class="mb-1 text-muted">Tipo de pago</p>
-                                                            <p class="mb-0">contado etc</p>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <!-- Estado de la orden "pendiente de pago, cancelada, enviada, entregada, abandonada, etc" -->
-                                                            <p class="mb-1 text-muted">Estado</p>
-                                                            <p class="mb-0">Pagado</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item px-0">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <!-- Aqui va la direccion -->
-                                                            <p class="mb-1 text-muted">Dirección</p>
-                                                            <p class="mb-0">Calle 123</p>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <p class="mb-1 text-muted">Codigo Postal</p>
-                                                            <p class="mb-0">20020</p>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <p class="mb-1 text-muted">Ciudad</p>
-                                                            <p class="mb-0">La Paz</p>
-                                                        </div>
 
-                                                    </div>
-                                                </li>
-                                                <!-- Aqui va el cupon aplicado -->
-                                                <li class="list-group-item px-0 pb-0">
-                                                    <p class="mb-1 text-muted">Cupon aplicado</p>
-                                                    <p class="mb-0">20% de descuento</p>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    <?php
+
+                                    
+
+                                    if ($hayOrdenes) {
+
+                                        /* validacion para saber si hay cupones */
+                                        if ($orders[0]->coupon !== null && isset($orders[0]->coupon->name)) {
+                                            $couponText = htmlspecialchars($orders[0]->coupon->name);
+                                        } else {
+                                            $couponText = "No se aplicó cupón";  
+                                        }
+
+                                        foreach ($presentations as $order) {
+                                            echo '<div class="card">
+                                                <div class="card-body">
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item px-0 pt-0">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+
+                                                                    <h4>' . htmlspecialchars($order->description) . '</h4>
+                                                                    <!-- Aqui el precio del producto -->
+                                                                    <p class="mb-0">$' . htmlspecialchars($order->current_price->amount) . '</p>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <p class="mb-1 text-muted">Folio</p>
+                                                                    <p class="mb-0">' . htmlspecialchars($orders[0]->folio) . '</p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item px-0">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <!-- Aqui va el tipo de pago -->
+                                                                    <p class="mb-1 text-muted">Tipo de pago</p>
+                                                                    <p class="mb-0">' . htmlspecialchars($orders[0]->payment_type->name) . '</p>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <!-- Estado de la orden "pendiente de pago, cancelada, enviada, entregada, abandonada, etc" -->
+                                                                    <p class="mb-1 text-muted">Estado</p>
+                                                                    <p class="mb-0">Pagado</p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item px-0">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <!-- Aqui va la direccion -->
+                                                                    <p class="mb-1 text-muted">Dirección</p>
+                                                                    <p class="mb-0">' . htmlspecialchars($orders[0]->address->street_and_use_number) . '</p>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <p class="mb-1 text-muted">Codigo Postal</p>
+                                                                    <p class="mb-0">' . htmlspecialchars($orders[0]->address->postal_code) . '</p>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <p class="mb-1 text-muted">Ciudad</p>
+                                                                    <p class="mb-0">' . htmlspecialchars($orders[0]->address->city) . '</p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <!-- Aqui va el cupon aplicado -->
+                                                        <li class="list-group-item px-0 pb-0">
+                                                            <p class="mb-1 text-muted">Cupon aplicado</p>
+                                                         <p class="mb-0">' . htmlspecialchars($couponText) . '</p>
+
+
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>';
+                                        }
+                                       
+                                    }else{                                   
+                                        echo '<div class="card">
+                                                <div class="card-body">
+                                                    <div class="col-md-6">
+                                                    <h4>Sin ordenes</h4>
+                                                    </div>  
+                                                </div>
+                                            </div>';  
+                                    }
+                               
+                                    ?>                                                        
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -253,7 +291,21 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
 
     <?php include_once __DIR__ . "/../layouts/scripts.php" ?>
 
+    <?php
+        function isValidImage($url) {
+            if (empty($url)) {
+                return false;
+            }
+            
+            $imageInfo = @getimagesize($url);
+            
+            return $imageInfo !== false;
+        }
+    ?>
+
+
 </body>
 <!-- [Body] end -->
 
 </html>
+
