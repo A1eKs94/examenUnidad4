@@ -7,6 +7,7 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
         //$user_id = $_SESSION['profile']->data->id;  
         $token = $_SESSION['token'];  
         require_once "../../App/controllers/Controller.php";
+        require_once "../../App/controllers/OrderController.php";
 
         if (isset($_GET['id'])) {
             $user_id = $_GET['id'];
@@ -16,15 +17,27 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                 'token' => $token   
             ];
             $user_datas = $controller->getClient($request);
+            $id_user = $user_datas->data->id;
+            $orders = $controller->getOrder($token,$id_user);
+              /*  var_dump($orders);
+            exit();     */
+            $hayOrdenes = true;  
+         
+            if(is_object($orders)){
+                if ($orders->message == "No se encontraron ordenes" || $orders->code == -1) {
+                    $hayOrdenes = false; 
+                }
+            }else{
+                $presentations = $orders[0]->presentations;
+            }
+           
 
-
-            
         } else {
-            echo "No se especificó el ID del cliente.";
+            echo "No se especificó el ID del usuario.";
         }
 
     } else {
-        echo "Error: El perfil del cliente no está disponible o no se encuentra en la sesión.";
+        echo "Error: El perfil del usuario no está disponible o no se encuentra en la sesión.";
         exit;
     }
 ?>
@@ -63,7 +76,7 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h2 class="mb-0">Detalles de Cliente</h2>
+                                <h2 class="mb-0">Detalles de Clientes</h2>
                             </div>
                         </div>
                     </div>
@@ -82,13 +95,16 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                                 <div class="card-body position-relative">
                                     <div class="text-center mt-3">
                                         <div class="chat-avtar d-inline-flex mx-auto">
+                                        <img class="rounded-circle img-fluid wid-90 img-thumbnail"
+                                            src="<?= ($user_datas->data->avatar === 'https://crud.jonathansoto.mx/storage/users/avatars/' || $user_datas->data->avatar === 'https://crud.jonathansoto.mx/storage/users/avatars/avantar.jpg') 
+                                                    ? BASE_PATH . 'assets/images/user-default.jpg' 
+                                                    : $user_datas->data->avatar ?>"
+                                            alt="User image" />
                                             
-                                             <!-- Aqui va el nombre de usuario -->
-                                            <h5 class="mb-0"><?php echo  $user_datas->data->name; ?></h5>
                                         </div>
-                                        </div>
+                                        <h5 class="mb-0"><?php echo  $user_datas->data->name; ?></h5>
+                                    </div>
                                 </div>
-                                <!-- Aqui va el menu de opciones -->
                                 <div
                                     class="nav flex-column nav-pills list-group list-group-flush account-pills mb-0"
                                     id="user-set-tab"
@@ -114,16 +130,6 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                                         aria-selected="false">
                                         <span class="f-w-500"><i class="ph-duotone ph-notebook m-r-10"></i>Ordenes</span>
                                     </a>
-                                    <a
-                                        class="nav-link list-group-item list-group-item-action"
-                                        id="user-set-directions-tab"
-                                        data-bs-toggle="pill"
-                                        href="#user-set-directions"
-                                        role="tab"
-                                        aria-controls="user-set-directions"
-                                        aria-selected="false">
-                                        <span class="f-w-500"><i class="ph-duotone ph-notebook m-r-10"></i>Direcciónes Guardadas</span>
-                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -133,7 +139,7 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                                 <div class="tab-pane fade show active" id="user-set-profile" role="tabpanel" aria-labelledby="user-set-profile-tab">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h4>Detalles del Cliente</h4>
+                                            <h4>Detalles del Usuario</h4>
                                         </div>
                                         <div class="card-body">
                                             <ul class="list-group list-group-flush">
@@ -181,137 +187,93 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                                         </div>
 
                                     </div>
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item px-0 pt-0">
-                                                    <div class="row">
-                                                        <!-- Aqui va el nombre del producto -->
-                                                        <div class="col-md-6">
-                                                            <h4>Lavadora</h4>
-                                                            <!-- Aqui el precio del producto -->
-                                                            <p class="mb-0">$21441</p>
-                                                        </div>
-                                                        <!-- Aqui va el folio de la orden'-->
-                                                        <div class="col-md-6">
-                                                            <p class="mb-1 text-muted">Folio</p>
-                                                            <p class="mb-0">123456</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item px-0">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <!-- Aqui va el tipo de pago -->
-                                                            <p class="mb-1 text-muted">Tipo de pago</p>
-                                                            <p class="mb-0">contado etc</p>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <!-- Estado de la orden "pendiente de pago, cancelada, enviada, entregada, abandonada, etc" -->
-                                                            <p class="mb-1 text-muted">Estado</p>
-                                                            <p class="mb-0">Pagado</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item px-0">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <!-- Aqui va la direccion -->
-                                                            <p class="mb-1 text-muted">Dirección</p>
-                                                            <p class="mb-0">Calle 123</p>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <p class="mb-1 text-muted">Codigo Postal</p>
-                                                            <p class="mb-0">20020</p>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <p class="mb-1 text-muted">Ciudad</p>
-                                                            <p class="mb-0">La Paz</p>
-                                                        </div>
 
-                                                    </div>
-                                                </li>
+                                    <?php
 
-                                                <!-- Aqui va el cupon aplicado -->
-                                                <li class="list-group-item px-0 pb-0">
-                                                    <p class="mb-1 text-muted">Cupon aplicado</p>
-                                                    <p class="mb-0">20% de descuento</p>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    
+
+                                    if ($hayOrdenes) {
+
+                                        /* validacion para saber si hay cupones */
+                                        if ($orders[0]->coupon !== null && isset($orders[0]->coupon->name)) {
+                                            $couponText = htmlspecialchars($orders[0]->coupon->name);
+                                        } else {
+                                            $couponText = "No se aplicó cupón";  
+                                        }
+
+                                        foreach ($presentations as $order) {
+                                            echo '<div class="card">
+                                                <div class="card-body">
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item px-0 pt-0">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+
+                                                                    <h4>' . htmlspecialchars($order->description) . '</h4>
+                                                                    <!-- Aqui el precio del producto -->
+                                                                    <p class="mb-0">$' . htmlspecialchars($order->current_price->amount) . '</p>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <p class="mb-1 text-muted">Folio</p>
+                                                                    <p class="mb-0">' . htmlspecialchars($orders[0]->folio) . '</p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item px-0">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <!-- Aqui va el tipo de pago -->
+                                                                    <p class="mb-1 text-muted">Tipo de pago</p>
+                                                                    <p class="mb-0">' . htmlspecialchars($orders[0]->payment_type->name) . '</p>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <!-- Estado de la orden "pendiente de pago, cancelada, enviada, entregada, abandonada, etc" -->
+                                                                    <p class="mb-1 text-muted">Estado</p>
+                                                                    <p class="mb-0">Pagado</p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item px-0">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <!-- Aqui va la direccion -->
+                                                                    <p class="mb-1 text-muted">Dirección</p>
+                                                                    <p class="mb-0">' . htmlspecialchars($orders[0]->address->street_and_use_number) . '</p>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <p class="mb-1 text-muted">Codigo Postal</p>
+                                                                    <p class="mb-0">' . htmlspecialchars($orders[0]->address->postal_code) . '</p>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <p class="mb-1 text-muted">Ciudad</p>
+                                                                    <p class="mb-0">' . htmlspecialchars($orders[0]->address->city) . '</p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <!-- Aqui va el cupon aplicado -->
+                                                        <li class="list-group-item px-0 pb-0">
+                                                            <p class="mb-1 text-muted">Cupon aplicado</p>
+                                                         <p class="mb-0">' . htmlspecialchars($couponText) . '</p>
+
+
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>';
+                                        }
+                                       
+                                    }else{                                   
+                                        echo '<div class="card">
+                                                <div class="card-body">
+                                                    <div class="col-md-6">
+                                                    <h4>Sin ordenes</h4>
+                                                    </div>  
+                                                </div>
+                                            </div>';  
+                                    }
+                               
+                                    ?>                                                        
                                 </div>
-
-                                <div class="tab-pane fade" id="user-set-directions" role="tabpanel" aria-labelledby="user-set-orders-tab">
-                                    <div class="card">
-                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                            <h4 class="mb-0">Direcciones Guardadas</h4>
-                                            <a class="btn btn-success" href="<?= BASE_PATH ?>clients/crear-direccion/">Añadir Dirección</a>
-
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item px-0 pt-0">
-                                                    <div class="row">
-                                                        <!-- Nombre -->
-                                                        <div class="col-md-6">
-                                                            <h4>Juanito Leon</h4>
-                                                            <!-- Teléfono -->
-                                                            <p class="mb-0">6120000000</p>
-                                                        </div>
-                                                        <!-- Cliente ID -->
-                                                        <div class="col-md-6">
-                                                            <p class="mb-1 text-muted">ID Cliente</p>
-                                                            <p class="mb-0">1</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item px-0">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <!-- Dirección -->
-                                                            <p class="mb-1 text-muted">Dirección</p>
-                                                            <p class="mb-0">16 de septiembre #123</p>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <!-- Dirección de facturación -->
-                                                            <p class="mb-1 text-muted">¿Es dirección de facturación?</p>
-                                                            <p class="mb-0">Sí</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item px-0">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <!-- Código Postal -->
-                                                            <p class="mb-1 text-muted">Código Postal</p>
-                                                            <p class="mb-0">23000</p>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <!-- Ciudad -->
-                                                            <p class="mb-1 text-muted">Ciudad</p>
-                                                            <p class="mb-0">La Paz</p>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <!-- Provincia -->
-                                                            <p class="mb-1 text-muted">Provincia</p>
-                                                            <p class="mb-0">Baja California Sur</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <!-- Botones -->
-                                            <div class="d-flex justify-content-end mt-3">
-                                                <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#editAddressModal">Editar</button>
-
-                                                <button class="btn btn-danger">Eliminar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
@@ -324,7 +286,6 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
 
     <!-- [ Main Content ] end -->
 
-    <?php include_once __DIR__ . "/../clients/modalAddress.php" ?>
     <?php include_once __DIR__ . "/../layouts/footer.php" ?>
 
 
@@ -336,3 +297,4 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
 <!-- [Body] end -->
 
 </html>
+
