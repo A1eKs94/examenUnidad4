@@ -30,7 +30,7 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
       <a href="<?= BASE_PATH ?>home/" class="b-brand text-primary">
         <!-- ========   Change your logo from here   ============ -->
         <img src="https://i.ibb.co/cDp8K0y/avocad.png" alt="logo" class="logo" style="max-width: 175px; min-width: 100px; height: auto;" />
-        </a>
+      </a>
     </div>
     <div class="navbar-content">
       <ul class="pc-navbar">
@@ -112,6 +112,7 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
           <ul class="pc-submenu">
             <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>categorias/etiquetas/">Etiquetas</a></li>
             <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>categorias/marcas/">Marcas</a></li>
+            <li class="pc-item"><a class="pc-link" href="<?= BASE_PATH ?>categorias/categorias/">Categorías</a></li>
           </ul>
         </li>
     </div>
