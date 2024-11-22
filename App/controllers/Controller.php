@@ -88,6 +88,14 @@ class Controller
         $_SESSION['id_status'] = $result->code;
         header('Location: ' . BASE_PATH . $request->redirect_url);
     }
+
+    // Products Controllers
+
+    public function createProduct($request, $files)
+    {
+        $request->cover = $files['cover']['tmp_name'];
+        var_dump($files);
+    }
 }
 
 $controller = new Controller();
@@ -106,6 +114,8 @@ if (isset($_POST['action'])) {
         case 'updateUser': $controller->updateUser($request, $_POST['redirect_url']); break;
         case 'deleteUser': $controller->deleteUser($request); break;
 
+        // Product
+        case 'createProduct': $controller->createProduct($request, $_FILES); break;
         default: echo 'Controlador no encontrado';
     }
 } else {
