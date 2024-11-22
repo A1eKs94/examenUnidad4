@@ -4,6 +4,7 @@ require_once dirname(__DIR__, 2) . '/config.php';
 require_once "AuthController.php";
 require_once "UserController.php";
 require_once "ClientController.php";
+require_once "ProductController.php";
 
 
 class Controller
@@ -11,12 +12,15 @@ class Controller
     public $authController;
     public $userController;
     public $clientController;
+    public $productController;
+
 
     public function __construct()
     {
         $this->authController = new AuthController();
         $this->userController = new UserController();
         $this->clientController = new ClientController();
+        $this->productController = new ProductController();
     }
 
     // Auth Controllers
@@ -166,10 +170,31 @@ class Controller
 
     // Products Controllers
 
+    public function getProduct($request)
+    {
+        $result = $this->productController->get($request);
+        return $result;
+    }
+
+    public function getProducts($request)
+    {
+        $result = $this->productController->index($request);
+        return $result;
+    }
+
     public function createProduct($request, $files)
     {
         $request->cover = $files['cover']['tmp_name'];
-        var_dump($files);
+        $result = $this->productController->create($request);
+        session_start();
+        $_SESSION['message'] = $result->message;
+        $_SESSION['id_status'] = $result->code;
+        header('Location: ' . BASE_PATH . $request->redirect_url);
+    }
+
+    public function updateProduct($request, $files)
+    {
+        
     }
 }
 
