@@ -3,6 +3,23 @@
 include_once __DIR__ . '/../../config.php';
 session_start();
 
+if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
+    $user_id = $_SESSION['profile']->data->id;
+    $token = $_SESSION['token'];
+
+    require_once "../../App/controllers/Controller.php";
+
+    $request = (object)[
+        'token' => $token
+    ];
+    $data_user = $controller->getUsers($request);
+
+    //var_dump($user_data); 
+} else {
+    echo "Error: error al traer los usuarios";
+    exit;
+}
+
 ?>
 
 <!doctype html>
@@ -52,6 +69,17 @@ session_start();
             <!-- [ breadcrumb ] end -->
 
             <div class="row">
+
+                <div id="deleteModal" class="modalEliminar" style="display: none;">
+                    <div class="modal-content-eliminar">
+                        <span class="close" onclick="closeDeleteModal()">&times;</span>
+                        <h2>Confirmar eliminación</h2>
+                        <p>¿Estás seguro de que deseas eliminar este usuario?</p>
+                        <button onclick="confirmDelete()">Sí, eliminar</button>
+                        <button onclick="closeDeleteModal()">Cancelar</button>
+                    </div>
+                </div>
+
                 <!-- [ basic-table ] start -->
                 <div class="col-xl-12">
                     <div class="card">
@@ -60,45 +88,52 @@ session_start();
                             <a href="<?= BASE_PATH ?>users/crear/" class="btn btn-primary btn-sm">Añadir Usuario</a>
                         </div>
                         <div class="card-body table-border-style">
-                            <div class="table-responsive">
-                                <table class="table" id="pc-dt-simple">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Nombre</th>
-                                            <th>Correo</th>
-                                            <th>Teléfono</th>
-                                            <th>Nivel</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <!-- Aquí va el id -->
-                                            <td>1</td>
-                                            <!-- Aquí va el nombre -->
-                                            <td>Sergio</td>
-                                            <!-- Aquí va el correo -->
-                                            <td>sergio@gmail.com</td>
-                                            <!-- Aquí va el teléfono -->
-                                            <td>123456</td>
-                                            <!-- Aquí va el nivel -->
-                                            <td>VIP</td>
-                                            <!-- Botones de acciones -->
-                                            <td>
-                                                <a href="<?= BASE_PATH ?>users/ver/" class="btn btn-light-primary btn-sm">Ver</a>
-                                                <a href="#"
-                                                    class="btn btn-light-info btn-sm"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#editUserModal">
-                                                    Editar
-                                                </a>
+                        <input type="hidden" name="id" value="<?php echo  $user_id; ?>">
 
-                                                <a href="" class="btn btn-light-danger btn-sm">Eliminar</a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="table-responsive">
+                        
+                            <form id="deleteUserForm" action="<?php echo BASE_PATH; ?>api" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="deleteUser">
+                                <input type="hidden" name="redirect_url" value="users/list/">
+                                <input type="hidden" name="token" value="<?php echo $token; ?>">
+                                <input type="hidden" name="id" id="userIdToDelete"> 
+                            </form>
+
+                                                                
+                            <table class="table" id="pc-dt-simple">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                        <th>Correo</th>
+                                        <th>Teléfono</th>
+                                        <th>Nivel</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    foreach ($data_user as $user) {
+                                        echo "<tr>";
+                                        echo "<td>" . htmlspecialchars($user->id) . "</td>";
+                                        echo "<td>" . htmlspecialchars($user->name) . "</td>";
+                                        echo "<td>" . htmlspecialchars($user->email) . "</td>";
+                                        echo "<td>" . (isset($user->phone_number) ? htmlspecialchars($user->phone_number) : 'No disponible') . "</td>";
+                                        echo "<td>" . htmlspecialchars($user->role) . "</td>";
+                                        
+                                        echo "<td>";
+                                        echo "<a href='" . BASE_PATH . "users/ver/?id=" . $user->id . "' class='btn btn-light-primary btn-sm'>Ver</a>";
+                                        echo "<a href='#' class='btn btn-light-info btn-sm' data-bs-toggle='modal' data-bs-target='#editUserModal' data-id='" . $user->id . "' data-name='" . $user->name . "' data-lastname='" . $user->lastname . "' data-email='" . $user->email . "' data-phone='" . $user->phone_number . "' data-image='" . $user->avatar . "'>Editar</a>";
+                                        echo "<a href='#' class='btn btn-light-danger btn-sm' onclick='openDeleteModal(" . $user->id . ")'>Eliminar</a>";
+                                        echo "</td>";
+                                        echo "</tr>";
+                                    }
+                                    ?>
+                                </tbody>                                       
+
+                            </table>
+
+                            
                             </div>
                         </div>
                     </div>
@@ -117,6 +152,8 @@ session_start();
     <?php include_once __DIR__ . "/../../views/layouts/scripts.php" ?>
 
     <script>
+        var userIdToDelete = null; 
+
         function loadUserData(id, name, email, phone, level) {
             document.getElementById('editUserId').value = id;
             document.getElementById('editUserName').value = name;
@@ -124,7 +161,77 @@ session_start();
             document.getElementById('editUserPhone').value = phone;
             document.getElementById('editUserLevel').value = level;
         }
+
+
+        function openDeleteModal(userId) {
+            userIdToDelete = userId; 
+            document.getElementById('deleteModal').style.display = "block";
+        }
+
+        function closeDeleteModal() {
+         document.getElementById('deleteModal').style.display = "none"; 
+        }
+
+        function confirmDelete() {
+            document.getElementById('userIdToDelete').value = userIdToDelete;
+            
+            document.getElementById('deleteUserForm').submit();
+
+            closeDeleteModal();
+        }
     </script>
+
+    <style>
+        .modalEliminar {
+        display: none; 
+        position: fixed;  
+        z-index: 1050; 
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0); 
+        background-color: rgba(0, 0, 0, 0.4); 
+        }
+
+        .modal-content-eliminar {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+        text-align: center;
+        position: relative;
+        }
+
+        .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+        }
+
+        button {
+        padding: 10px 20px;
+        margin: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        }
+
+        button:hover {
+        background-color: #f44336;
+        color: white;
+        }
+    </style>
 
 </body>
 <!-- [Body] end -->

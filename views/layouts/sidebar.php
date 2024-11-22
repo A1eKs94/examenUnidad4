@@ -29,8 +29,8 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
     <div class="m-header">
       <a href="<?= BASE_PATH ?>home/" class="b-brand text-primary">
         <!-- ========   Change your logo from here   ============ -->
-        <img src="<?= BASE_PATH ?>assets/images/logo-dark.svg" alt="logo image" class="logo-lg" />
-      </a>
+        <img src="https://i.ibb.co/cDp8K0y/avocad.png" alt="logo" class="logo" style="max-width: 175px; min-width: 100px; height: auto;" />
+        </a>
     </div>
     <div class="navbar-content">
       <ul class="pc-navbar">

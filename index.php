@@ -18,6 +18,14 @@ if (isset($_SESSION['error_message'])) {
 
 <head>
     <?php include_once __DIR__ . "/views/layouts/head.php" ?>
+    <style type="text/css">
+        .logo {
+            max-width: 250px;
+            min-width: 100px;
+            height: auto;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <!-- [Head] end -->
 
@@ -38,6 +46,7 @@ if (isset($_SESSION['error_message'])) {
             <div class="auth-form">
                 <div class="card my-5 mx-3">
                     <div class="card-body">
+                        <img class="logo" src="https://i.ibb.co/x2LwpkB/Avocado-s-Shop.png">
                         <h4 class="f-w-500 mb-1">Iniciar sesión con tu correo</h4>
                         <p class="mb-3">Ingrese los datos solicitados</p>
                         <?php if (!empty($error_message)): ?>
