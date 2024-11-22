@@ -30,7 +30,7 @@ class CategoryController
             return (object)["code" => -1, "message" => "Error inesperado"];
         }
 
-        return $response;
+        return $response -> data ?? [];
     }
 
     public function get($request)
@@ -61,7 +61,7 @@ class CategoryController
             return (object)["code" => -1, "message" => "Error inesperado"];
         }
 
-        return $response;
+        return $response -> data ?? [];
     }
 
     public function create($request)
@@ -93,7 +93,7 @@ class CategoryController
             return (object)["code" => -1, "message" => "Error inesperado"];
         }
 
-        return $response;
+        return $response -> data ?? [];
     }
 
     public function update($request)
@@ -133,7 +133,7 @@ class CategoryController
             return (object)["code" => -1, "message" => "Error inesperado"];
         }
 
-        return $response;
+        return $response -> data ?? [];
     }
 
     public function delete($request)
@@ -164,6 +164,6 @@ class CategoryController
             return (object)["code" => -1, "message" => "Error inesperado"];
         }
 
-        return $response;
+        return $response -> data ?? [];
     }
 }
