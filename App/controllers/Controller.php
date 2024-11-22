@@ -14,6 +14,7 @@ class Controller
     public $clientController;
     public $productController;
     public $orderController;
+    public $categoryController;
 
 
     public function __construct()
@@ -22,6 +23,7 @@ class Controller
         $this->userController = new UserController();
         $this->clientController = new ClientController();
         $this->productController = new ProductController();
+        $this->categoryController = new CategoryController();
         $this->orderController = new OrderController();
     }
 
@@ -212,7 +214,48 @@ class Controller
         header('Location: ' . BASE_PATH . $request->redirect_url);
     }
 
-    // Orders Controllers //
+    // ============= Category Controllers ============= //
+
+    public function getCategories($request)
+    {
+        $result = $this->categoryController->index($request);
+        return $result;
+    }
+
+    public function getCategory($request)
+    {
+        $result = $this->categoryController->get($request);
+        return $result;
+    }
+
+    public function createCategory($request)
+    {
+        $result = $this->categoryController->create($request);
+        session_start();
+        $_SESSION['message'] = $result->message;
+        $_SESSION['id_status'] = $result->code;
+        header('Location: ' . BASE_PATH . $request->redirect_url);
+    }
+
+    public function updateCategory($request)
+    {
+        $result = $this->categoryController->update($request);
+        session_start();
+        $_SESSION['message'] = $result->message;
+        $_SESSION['id_status'] = $result->code;
+        header('Location: ' . BASE_PATH . $request->redirect_url);
+    }
+
+    public function deleteCategory($request)
+    {
+        $result = $this->categoryController->delete($request);
+        session_start();
+        $_SESSION['message'] = $result->message;        
+        $_SESSION['id_status'] = $result->code;
+        header('Location: ' . BASE_PATH . $request->redirect_url);
+    }
+
+    // ============= Orders Controllers ============= //
     public function getOrder($token, $id_user)
     {
       
