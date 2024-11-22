@@ -84,24 +84,31 @@ if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php if (is_array($data_brand) || is_object($data_brand)) {
-                                        foreach ($data_brand as $brand) {
-                                        echo "<tr>";
-                                            echo "<td>" . htmlspecialchars($brand->name) . "</td>";
-                                            echo "<td>" . htmlspecialchars($brand->description) . "</td>";
-                                            echo "<td>" . htmlspecialchars($brand->slug) . "</td>";
-                                            echo "<td>";
-                                                echo "<a href='#' class='btn btn-light-info btn-sm' data-bs-toggle='modal' data-bs-target='#editBrandModal' data-id='" . $brand->id . "' data-name='" . $brand->name . "' data-description='" . $brand->description . "' data-slug='" . $brand->slug . "'>Editar</a>";
-                                                echo "<a href='#' class='btn btn-light-danger btn-sm' onclick='openDeleteModal(" . $brand->id . ")'>Eliminar</a>";
+                                        <?php
+                                        if (is_array($data_brand)) {
+                                            foreach ($data_brand as $brand) {
+                                                // Validar que cada elemento sea un objeto y tenga las propiedades esperadas
+                                                $name = isset($brand->name) ? htmlspecialchars($brand->name) : 'N/A';
+                                                $description = isset($brand->description) ? htmlspecialchars($brand->description) : 'N/A';
+                                                $slug = isset($brand->slug) ? htmlspecialchars($brand->slug) : 'N/A';
+
+                                                echo "<tr>";
+                                                echo "<td>{$name}</td>";
+                                                echo "<td>{$description}</td>";
+                                                echo "<td>{$slug}</td>";
+                                                echo "<td>";
+                                                if (isset($brand->id)) {
+                                                    echo "<a href='#' class='btn btn-light-info btn-sm' data-bs-toggle='modal' data-bs-target='#editBrandModal' data-id='{$brand->id}' data-name='{$name}' data-description='{$description}' data-slug='{$slug}'>Editar</a>";
+                                                    echo "<a href='#' class='btn btn-light-danger btn-sm' onclick='openDeleteModal({$brand->id})'>Eliminar</a>";
+                                                }
                                                 echo "</td>";
-                                            echo "</tr>";
-                                        }
+                                                echo "</tr>";
+                                            }
                                         } else {
-                                        echo "<tr>
-                                            <td colspan='4'>No se encontraron marcas.</td>
-                                        </tr>";
+                                            echo "<tr><td colspan='4'>No se encontraron marcas.</td></tr>";
                                         }
                                         ?>
+
                                         <!-- Puedes añadir más filas aquí -->
                                     </tbody>
                                 </table>
