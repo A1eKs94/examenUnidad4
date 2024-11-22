@@ -5,6 +5,9 @@ require_once "AuthController.php";
 require_once "UserController.php";
 require_once "ClientController.php";
 require_once "ProductController.php";
+require_once "CategoryController.php";
+require_once "BrandController.php";
+require_once "OrderController.php";
 
 
 class Controller
@@ -15,6 +18,7 @@ class Controller
     public $productController;
     public $orderController;
     public $categoryController;
+    public $brandController;
 
 
     public function __construct()
@@ -24,6 +28,7 @@ class Controller
         $this->clientController = new ClientController();
         $this->productController = new ProductController();
         $this->categoryController = new CategoryController();
+        $this->brandController = new BrandController();
         $this->orderController = new OrderController();
     }
 
@@ -255,6 +260,47 @@ class Controller
         header('Location: ' . BASE_PATH . $request->redirect_url);
     }
 
+    // ============= Brand Controllers ============= //
+
+    public function getBrands($request)
+    {
+        $result = $this->brandController->index($request);
+        return $result;
+    }
+
+    public function getBrand($request)
+    {
+        $result = $this->brandController->get($request);
+        return $result;
+    }
+
+    public function createBrand($request)
+    {
+        $result = $this->brandController->create($request);
+        session_start();
+        $_SESSION['message'] = $result->message;
+        $_SESSION['id_status'] = $result->code;
+        header('Location: ' . BASE_PATH . $request->redirect_url);
+    }
+
+    public function updateBrand($request)
+    {
+        $result = $this->brandController->update($request);
+        session_start();
+        $_SESSION['message'] = $result->message;
+        $_SESSION['id_status'] = $result->code;
+        header('Location: ' . BASE_PATH . $request->redirect_url);
+    }
+
+    public function deleteBrand($request)
+    {
+        $result = $this->brandController->delete($request);
+        session_start();
+        $_SESSION['message'] = $result->message;
+        $_SESSION['id_status'] = $result->code;
+        header('Location: ' . BASE_PATH . $request->redirect_url);
+    }
+
     // ============= Orders Controllers ============= //
     public function getOrder($token, $id_user)
     {
@@ -323,6 +369,28 @@ if (isset($_POST['action'])) {
             break;
         case 'deleteProduct':
             $controller->deleteProduct($request);
+            break;
+
+            // Category
+        case 'createCategory':
+            $controller->createCategory($request);
+            break;
+        case 'updateCategory':
+            $controller->updateCategory($request);
+            break;
+        case 'deleteCategory':
+            $controller->deleteCategory($request);
+            break;
+
+            // Brand
+        case 'createBrand':
+            $controller->createBrand($request);
+            break;
+        case 'updateBrand':
+            $controller->updateBrand($request);
+            break;
+        case 'deleteBrand':
+            $controller->deleteBrand($request);
             break;
 
             // Order
