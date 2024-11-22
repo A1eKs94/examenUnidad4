@@ -5,7 +5,11 @@
                 <h5 class="modal-title" id="addBrandModalLabel">Añadir Marca</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
-            <form action="<?= BASE_PATH ?>brands/create/" method="POST">
+            <form action="<?= BASE_PATH ?>categorias/marcas/" method="POST">
+                <input type="hidden" name="action" value="createBrand">
+                <input type="hidden" name="redirect_url" value="categorias/marcas/">
+                <input type="hidden" name="token" value="<?php echo  $token; ?>">
+                <input type="hidden" name="created_by" value="<?php echo  $created_by; ?>">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nombre</label>
