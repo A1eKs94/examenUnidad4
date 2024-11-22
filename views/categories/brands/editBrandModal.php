@@ -36,3 +36,27 @@
         </div>
     </div>
 </div>
+
+<script>
+    const editName = document.getElementById('editName');
+
+    editName.addEventListener('input', (event) => {
+        const value = event.target.value;
+        event.target.value = value.replace(/[^a-zA-ZñÑ\s]/g, '').slice(0, 50);
+    });
+
+    const editDescription = document.getElementById('editDescription');
+
+    editDescription.addEventListener('input', (event) => {
+        const value = event.target.value;
+
+        event.target.value = value.replace(/[^a-zA-ZñÑÁÉÍÓÚáéíóú0-9\s.,´]/g, '').slice(0, 185);
+    });
+
+    const editSlug = document.getElementById('editSlug');
+
+    editSlug.addEventListener('input', (event) => {
+        const value = event.target.value;
+        event.target.value = value.replace(/[^a-z-ñ0-9\-_]/g, '').slice(0, 50);
+    });
+</script>

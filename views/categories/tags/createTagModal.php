@@ -28,3 +28,27 @@
         </div>
     </div>
 </div>
+
+<script>
+    const name = document.getElementById('name');
+
+    name.addEventListener('input', (event) => {
+        const value = event.target.value;
+        event.target.value = value.replace(/[^a-zA-ZñÑ\s]/g, '').slice(0, 50);
+    });
+
+    const description = document.getElementById('description');
+
+    description.addEventListener('input', (event) => {
+        const value = event.target.value;
+
+        event.target.value = value.replace(/[^a-zA-ZñÑÁÉÍÓÚáéíóú0-9\s.,´]/g, '').slice(0, 185);
+    });
+
+    const slug = document.getElementById('slug');
+
+    slug.addEventListener('input', (event) => {
+        const value = event.target.value;
+        event.target.value = value.replace(/[^a-z-ñ0-9\-_]/g, '').slice(0, 50);
+    });
+</script>
