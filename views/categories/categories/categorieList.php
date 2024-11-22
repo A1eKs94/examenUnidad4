@@ -3,6 +3,23 @@
 include_once __DIR__ . '/../../../config.php';
 session_start();
 
+if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
+    $user_id = $_SESSION['profile']->data->id;
+    $token = $_SESSION['token'];
+
+    require_once "../../../App/controllers/Controller.php";
+
+    $request = (object)[
+        'token' => $token
+    ];
+    $data_categorie = $controller->getCategories($request);
+
+    /*       var_dump($data_categorie); 
+    exit;   */
+} else {
+    echo "Error: error al traer los usuarios";
+    exit;
+}
 ?>
 
 <!doctype html>
@@ -68,15 +85,26 @@ session_start();
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Dulces y caramelos</td>
-                                            <td>malisiosos viscos</td>
-                                            <td>dulces-y-caramelos</td>
-                                            <td>
-                                                <button type="button" class="btn btn-light-info btn-sm" data-bs-toggle="modal" data-bs-target="#editCategorieModal">Editar</button>
-                                                <a href="#" class="btn btn-light-danger btn-sm">Eliminar</a>
-                                            </td>
-                                        </tr>
+                                        <?php
+                                        foreach ($data_categorie as $categorie) {
+                                            // Validar que cada elemento sea un objeto y tenga las propiedades esperadas
+                                            $name = isset($categorie->name) ? htmlspecialchars($categorie->name) : 'N/A';
+                                            $description = isset($categorie->description) ? htmlspecialchars($categorie->description) : 'N/A';
+                                            $slug = isset($categorie->slug) ? htmlspecialchars($categorie->slug) : 'N/A';
+
+                                            echo "<tr>";
+                                            echo "<td>{$name}</td>";
+                                            echo "<td>{$description}</td>";
+                                            echo "<td>{$slug}</td>";
+                                            echo "<td>";
+                                            if (isset($categorie->id)) {
+                                                echo "<a href='#' class='btn btn-light-info btn-sm' data-bs-toggle='modal' data-bs-target='#editCategorieModal' data-id='{$categorie->id}' data-name='{$name}' data-description='{$description}' data-slug='{$slug}'>Editar</a>";
+                                                echo "<a href='#' class='btn btn-light-danger btn-sm' onclick='openDeleteModal({$categorie->id})'>Eliminar</a>";
+                                            }
+                                            echo "</td>";
+                                            echo "</tr>";
+                                        }
+                                        ?>
                                         <!-- Puedes añadir más filas aquí -->
                                     </tbody>
                                 </table>
