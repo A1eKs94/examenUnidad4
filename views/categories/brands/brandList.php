@@ -2,6 +2,23 @@
 
 include_once __DIR__ . '/../../../config.php';
 session_start();
+
+if (isset($_SESSION['profile']->data->id) && isset($_SESSION['token'])) {
+    $user_id = $_SESSION['profile']->data->id;
+    $token = $_SESSION['token'];
+
+    require_once "../../../App/controllers/Controller.php";
+
+    $request = (object)[
+        'token' => $token
+    ];
+    $data_brand = $controller->getBrands($request);
+
+    // var_dump($data_brand);
+} else {
+    echo "Error: error al traer los marcas";
+    exit;
+}
 ?>
 
 <!doctype html>
@@ -67,15 +84,24 @@ session_start();
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Ford</td>
-                                            <td>Marca de autos</td>
-                                            <td>ford</td>
-                                            <td>
-                                                <button type="button" class="btn btn-light-info btn-sm" data-bs-toggle="modal" data-bs-target="#editBrandModal">Editar</button>
-                                                <a href="#" class="btn btn-light-danger btn-sm">Eliminar</a>
-                                            </td>
-                                        </tr>
+                                        <?php if (is_array($data_brand) || is_object($data_brand)) {
+                                        foreach ($data_brand as $brand) {
+                                        echo "<tr>";
+                                            echo "<td>" . htmlspecialchars($brand->name) . "</td>";
+                                            echo "<td>" . htmlspecialchars($brand->description) . "</td>";
+                                            echo "<td>" . htmlspecialchars($brand->slug) . "</td>";
+                                            echo "<td>";
+                                                echo "<a href='#' class='btn btn-light-info btn-sm' data-bs-toggle='modal' data-bs-target='#editBrandModal' data-id='" . $brand->id . "' data-name='" . $brand->name . "' data-description='" . $brand->description . "' data-slug='" . $brand->slug . "'>Editar</a>";
+                                                echo "<a href='#' class='btn btn-light-danger btn-sm' onclick='openDeleteModal(" . $brand->id . ")'>Eliminar</a>";
+                                                echo "</td>";
+                                            echo "</tr>";
+                                        }
+                                        } else {
+                                        echo "<tr>
+                                            <td colspan='4'>No se encontraron marcas.</td>
+                                        </tr>";
+                                        }
+                                        ?>
                                         <!-- Puedes añadir más filas aquí -->
                                     </tbody>
                                 </table>
@@ -95,6 +121,8 @@ session_start();
     <?php include_once __DIR__ . "/../../layouts/footer.php" ?>
     <!-- Required Js -->
     <?php include_once __DIR__ . "/../../layouts/scripts.php" ?>
+
+
 </body>
 <!-- [Body] end -->
 
